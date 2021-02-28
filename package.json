@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "discord.js": "^12.5.1",
+    "fs": "^0.0.1-security",
+    "node": "^15.8.0",
+    "underscore": "^1.12.0"
+  }
+}
