@@ -222,7 +222,7 @@ client.on("messageReactionAdd", (reaction, user) => { // message reactions go br
     if (reaction.message.id === rolemid) {
         emojiarr.forEach(function (e, i) {
             if (reaction.emoji.id == e) {
-                cringe(user, rolearr[i], guild)
+                user.roles.add(guild.roles.cache.get(rolearr[i]))
             }
         });
     }
@@ -234,37 +234,10 @@ client.on("messageReactionRemove", (reaction, user) => { // message reactions go
     if (reaction.message.id === rolemid) {
         emojiarr.forEach(function (e, i) {
             if (reaction.emoji.id == e) {
-                cringe2(user, rolearr[i], guild)
+                user.roles.remove(guild.roles.cache.get(rolearr[i]))
             }
         });
     }
 })
-
-
-async function cringe(u, r, g) {
-    var role = g.roles.cache.get(r)
-    const user = await g.members.fetch(u.id)
-    if (user.roles.cache.has(r) == true) { //I fucking hate js
-        console.log("ree")
-        user.roles.remove(role)
-    }
-    else if (user.roles.cache.has(r) == false) {
-        console.log("ree2")
-        user.roles.add(role)
-    }
-}
-async function cringe2(u, r, g) {
-    var role = g.roles.cache.get(r)
-    const user = await g.members.fetch(u.id)
-    if (user.roles.cache.has(r) == true) { //I fucking hate js
-        console.log("ree2")
-        user.roles.add(role)
-    }
-    else if (user.roles.cache.has(r) == false) {
-
-        console.log("ree")
-        user.roles.remove(role)
-    }
-} //THIS SHOULDN'T FUCKING WORK AT ALL REEEEEEEEEEEEEEEEEEEEEEEE
 
 client.login(token); //todo: comment the code you dumb shit
