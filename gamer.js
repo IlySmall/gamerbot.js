@@ -23,7 +23,7 @@ for (const file of commandFiles) { // does node magic on the files
 }
 
 client.on('ready', () => { // Stuff that happens when the bot alives
-    client.channels.cache.get(rolecid).fetchMessage(rolemid).then(m => {
+    client.channels.cache.get(rolecid).messages.fetch(rolemid).then(m => {
         console.log("Cached reaction message.");
     }).catch(e => {
         console.error("Error loading message.");
