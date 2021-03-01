@@ -9,7 +9,8 @@ setInterval(() => {
 }, 500);
 const fs = require('fs'); // for checking filesystem.
 const client = new Discord.Client(); // read please
-
+let rolecid="740408169712320592"
+let rolemid=""
 client.commands = new Discord.Collection(); // array<T> sorta of gay thing of commands.
 const cooldowns = new Discord.Collection(); // ^ by cooldowns
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js')); // Okay so, it looks for the folder "commands"
@@ -23,6 +24,15 @@ for (const file of commandFiles) { // does node magic on the files
 
 
 client.on('ready', () => { // Stuff that happens when the bot alives
+    const retard = new Discord.MessageEmbed()
+    .setColor('#800080')
+    .setTitle("Role picker.")
+    .setAuthor("NekoMikuri", "https://cdn.discordapp.com/avatars/686271040258572314/a_ec21036a8546cccceb2e1354f33c4d94.gif")
+    .setTimestamp()
+    .setDescription("Currently available roles to pick are: ")
+
+    client.channels.cache.get(rolecid).send(retard);
+
     console.log(`Logged in as ${client.user.tag}!`);
     const randomColor = () => { // does random color stuff.
     let color = '#';
