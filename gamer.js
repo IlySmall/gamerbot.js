@@ -218,56 +218,65 @@ client.on("messageReactionAdd", (reaction, user) => { // message reactions go br
     if (reaction.message.id === rolemid) {
         switch (reaction.emoji.id) {
             case 754340781984317521:
-                "749789244536389713"
+                cringe(user,"749789244536389713")
                 break;
             case 717230296721915905:
-                "740399821818429470"
+                cringe(user,"740399821818429470")
                 break;
             case 717230616655167510:
-                "721544565689155584"
+                cringe(user,"721544565689155584")
                 break;
             case 740414056757985281:
-                "740395831424974973"
+                cringe(user,"740395831424974973")
                 break;
             case 745118447821914212:
-                "740397121710325831"
+                cringe(user,"740397121710325831")
                 break;
             case 740414636720914483:
-                "740395459788668992"
+                cringe(user,"740395459788668992")
                 break;
             case 740415675679506472:
-                "740397783831412746"
+                cringe(user,"740397783831412746")
                 break;
             case 719361899472486471:
-                "739873729655472269"
+                cringe(user,"739873729655472269")
                 break;
             case 740416254157783092:
-                "740398278390054963"
+                cringe(user,"740398278390054963")
                 break;
             case 797686113736327168:
-                "797686113736327168"
+                cringe(user,"797686113736327168")
                 break;
             case 720392147878150184:
-                "740396629642706996"
+                cringe(user,"740396629642706996")
                 break;
             case 740413659653603328:
-                "718147584568328253"
+                cringe(user,"718147584568328253")
                 break;
             case 740411552850509894:
-                "739604745462874195"
+                cringe(user,"739604745462874195")
                 break;
             case 740412109590102096:
-                "740394347173773462"
+                cringe(user,"740394347173773462")
                 break;
             case 740413386382377033:
-                "739609241085804594"
+                cringe(user,"739609241085804594")
                 break;
         }
 
     }
-
-
-
 })
+
+async function cringe(u, r){
+    var role = message.guild.roles.cache.get(r)
+    const user = await message.guild.members.fetch(u.id)
+    if (user.roles.cache.has(r) == true) { //I fucking hate js
+        user.roles.remove(role)
+    }
+    else if (user.roles.cache.has(r) == false) {
+        user.roles.add(role)
+    }
+    console.log("bruh")
+} 
 
 client.login(token); //todo: comment the code you dumb shit
