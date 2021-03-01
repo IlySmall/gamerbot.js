@@ -270,7 +270,7 @@ client.on("messageReactionAdd", (reaction, user) => { // message reactions go br
 
 async function cringe(u, r, g){
     var role = g.roles.cache.get(r)
-    const user = await message.guild.members.fetch(u.id)
+    const user = await g.members.fetch(u.id)
     if (user.roles.cache.has(r) == true) { //I fucking hate js
         user.roles.remove(role)
     }
