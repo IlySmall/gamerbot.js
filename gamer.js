@@ -238,7 +238,7 @@ client.on("messageUpdate", message => {
     //todo
 })
 
-client.on("messageReactionAdd", (reaction, user) => {
+client.on("messageReactionAdd", (reaction, user) => { // message reactions go brr ver c00l
     if (reaction.message.id === rolemid) {
         switch (reaction.emoji.id) {
             case 754340781984317521:
