@@ -214,13 +214,15 @@ client.on("messageUpdate", message => {
 })
 
 client.on("messageReactionAdd", (reaction, user) => { // message reactions go brr ver c00l
+    var guild = reaction.message.guild
     if (reaction.message.id === rolemid) {
+        console.log(reaction.emoji.id);
         switch (reaction.emoji.id) {
             case 754340781984317521:
-                guild.fetchMember(user) // fetch the user that reacted
+                guild.members.fetch(user) // fetch the user that reacted
                     .then((member) => {
-                        let role = (member.guild.roles.find(role => role.id == "749789244536389713"));
-                        member.addRole(role)
+                        let role = (member.guild.roles.find("749789244536389713"));
+                        member.roles.add(role)
                             .then(() => {
                                 console.log(`Added the role to ${member.displayName}`);
                             }
@@ -228,10 +230,10 @@ client.on("messageReactionAdd", (reaction, user) => { // message reactions go br
                     });
                 break;
             case 717230296721915905:
-                guild.fetchMember(user) // fetch the user that reacted
+                guild.members.fetch(user) // fetch the user that reacted
                     .then((member) => {
-                        let role = (member.guild.roles.find(role => role.id == "740399821818429470"));
-                        member.addRole(role)
+                        let role = (member.guild.roles.find("740399821818429470"));
+                        member.roles.add(role)
                             .then(() => {
                                 console.log(`Added the role to ${member.displayName}`);
                             }
@@ -239,10 +241,10 @@ client.on("messageReactionAdd", (reaction, user) => { // message reactions go br
                     });
                 break;
             case 717230616655167510:
-                guild.fetchMember(user) // fetch the user that reacted
+                guild.members.fetch(user) // fetch the user that reacted
                     .then((member) => {
-                        let role = (member.guild.roles.find(role => role.id == "721544565689155584"));
-                        member.addRole(role)
+                        let role = (member.guild.roles.find("721544565689155584"));
+                        member.roles.add(role)
                             .then(() => {
                                 console.log(`Added the role to ${member.displayName}`);
                             }
@@ -250,10 +252,10 @@ client.on("messageReactionAdd", (reaction, user) => { // message reactions go br
                     });
                 break;
             case 740414056757985281:
-                guild.fetchMember(user) // fetch the user that reacted
+                guild.members.fetch(user) // fetch the user that reacted
                     .then((member) => {
-                        let role = (member.guild.roles.find(role => role.id == "740395831424974973"));
-                        member.addRole(role)
+                        let role = (member.guild.roles.find("740395831424974973"));
+                        member.roles.add(role)
                             .then(() => {
                                 console.log(`Added the role to ${member.displayName}`);
                             }
@@ -261,10 +263,10 @@ client.on("messageReactionAdd", (reaction, user) => { // message reactions go br
                     });
                 break;
             case 745118447821914212:
-                guild.fetchMember(user) // fetch the user that reacted
+                guild.members.fetch(user) // fetch the user that reacted
                     .then((member) => {
-                        let role = (member.guild.roles.find(role => role.id == "740397121710325831"));
-                        member.addRole(role)
+                        let role = (member.guild.roles.find("740397121710325831"));
+                        member.roles.add(role)
                             .then(() => {
                                 console.log(`Added the role to ${member.displayName}`);
                             }
@@ -272,10 +274,10 @@ client.on("messageReactionAdd", (reaction, user) => { // message reactions go br
                     });
                 break;
             case 740414636720914483:
-                guild.fetchMember(user) // fetch the user that reacted
+                guild.members.fetch(user) // fetch the user that reacted
                     .then((member) => {
-                        let role = (member.guild.roles.find(role => role.id == "740395459788668992"));
-                        member.addRole(role)
+                        let role = (member.guild.roles.find("740395459788668992"));
+                        member.roles.add(role)
                             .then(() => {
                                 console.log(`Added the role to ${member.displayName}`);
                             }
@@ -283,10 +285,10 @@ client.on("messageReactionAdd", (reaction, user) => { // message reactions go br
                     });
                 break;
             case 740415675679506472:
-                guild.fetchMember(user) // fetch the user that reacted
+                guild.members.fetch(user) // fetch the user that reacted
                     .then((member) => {
-                        let role = (member.guild.roles.find(role => role.id == "740397783831412746"));
-                        member.addRole(role)
+                        let role = (member.guild.roles.find("740397783831412746"));
+                        member.roles.add(role)
                             .then(() => {
                                 console.log(`Added the role to ${member.displayName}`);
                             }
@@ -294,10 +296,10 @@ client.on("messageReactionAdd", (reaction, user) => { // message reactions go br
                     });
                 break;
             case 719361899472486471:
-                guild.fetchMember(user) // fetch the user that reacted
+                guild.members.fetch(user) // fetch the user that reacted
                     .then((member) => {
-                        let role = (member.guild.roles.find(role => role.id == "739873729655472269"));
-                        member.addRole(role)
+                        let role = (member.guild.roles.find("739873729655472269"));
+                        member.roles.add(role)
                             .then(() => {
                                 console.log(`Added the role to ${member.displayName}`);
                             }
@@ -305,10 +307,10 @@ client.on("messageReactionAdd", (reaction, user) => { // message reactions go br
                     });
                 break;
             case 740416254157783092:
-                guild.fetchMember(user) // fetch the user that reacted
+                guild.members.fetch(user) // fetch the user that reacted
                     .then((member) => {
-                        let role = (member.guild.roles.find(role => role.id == "740398278390054963"));
-                        member.addRole(role)
+                        let role = (member.guild.roles.find("740398278390054963"));
+                        member.roles.add(role)
                             .then(() => {
                                 console.log(`Added the role to ${member.displayName}`);
                             }
@@ -316,10 +318,10 @@ client.on("messageReactionAdd", (reaction, user) => { // message reactions go br
                     });
                 break;
             case 797686113736327168:
-                guild.fetchMember(user) // fetch the user that reacted
+                guild.members.fetch(user) // fetch the user that reacted
                     .then((member) => {
-                        let role = (member.guild.roles.find(role => role.id == "797686113736327168"));
-                        member.addRole(role)
+                        let role = (member.guild.roles.find("797686113736327168"));
+                        member.roles.add(role)
                             .then(() => {
                                 console.log(`Added the role to ${member.displayName}`);
                             }
@@ -327,10 +329,10 @@ client.on("messageReactionAdd", (reaction, user) => { // message reactions go br
                     });
                 break;
             case 720392147878150184:
-                guild.fetchMember(user) // fetch the user that reacted
+                guild.members.fetch(user) // fetch the user that reacted
                     .then((member) => {
-                        let role = (member.guild.roles.find(role => role.id == "740396629642706996"));
-                        member.addRole(role)
+                        let role = (member.guild.roles.find("740396629642706996"));
+                        member.roles.add(role)
                             .then(() => {
                                 console.log(`Added the role to ${member.displayName}`);
                             }
@@ -338,10 +340,10 @@ client.on("messageReactionAdd", (reaction, user) => { // message reactions go br
                     });
                 break;
             case 740413659653603328:
-                guild.fetchMember(user) // fetch the user that reacted
+                guild.members.fetch(user) // fetch the user that reacted
                     .then((member) => {
-                        let role = (member.guild.roles.find(role => role.id == "718147584568328253"));
-                        member.addRole(role)
+                        let role = (member.guild.roles.find("718147584568328253"));
+                        member.roles.add(role)
                             .then(() => {
                                 console.log(`Added the role to ${member.displayName}`);
                             }
@@ -349,10 +351,10 @@ client.on("messageReactionAdd", (reaction, user) => { // message reactions go br
                     });
                 break;
             case 740411552850509894:
-                guild.fetchMember(user) // fetch the user that reacted
+                guild.members.fetch(user) // fetch the user that reacted
                     .then((member) => {
-                        let role = (member.guild.roles.find(role => role.id == "739604745462874195"));
-                        member.addRole(role)
+                        let role = (member.guild.roles.find("739604745462874195"));
+                        member.roles.add(role)
                             .then(() => {
                                 console.log(`Added the role to ${member.displayName}`);
                             }
@@ -360,10 +362,10 @@ client.on("messageReactionAdd", (reaction, user) => { // message reactions go br
                     });
                 break;
             case 740412109590102096:
-                guild.fetchMember(user) // fetch the user that reacted
+                guild.members.fetch(user) // fetch the user that reacted
                     .then((member) => {
-                        let role = (member.guild.roles.find(role => role.id == "740394347173773462"));
-                        member.addRole(role)
+                        let role = (member.guild.roles.find("740394347173773462"));
+                        member.roles.add(role)
                             .then(() => {
                                 console.log(`Added the role to ${member.displayName}`);
                             }
@@ -371,10 +373,10 @@ client.on("messageReactionAdd", (reaction, user) => { // message reactions go br
                     });
                 break;
             case 740413386382377033:
-                guild.fetchMember(user) // fetch the user that reacted
+                guild.members.fetch(user) // fetch the user that reacted
                     .then((member) => {
-                        let role = (member.guild.roles.find(role => role.id == "739609241085804594"));
-                        member.addRole(role)
+                        let role = (member.guild.roles.find("739609241085804594"));
+                        member.roles.add(role)
                             .then(() => {
                                 console.log(`Added the role to ${member.displayName}`);
                             }
