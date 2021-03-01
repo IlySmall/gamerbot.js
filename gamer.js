@@ -327,13 +327,14 @@ client.on("messageReactionRemove", (reaction, user) => { // message reactions go
 async function cringe(u, r, g){
     var role = g.roles.cache.get(r)
     const user = await g.members.fetch(u.id)
-    if (users.roles.fetch(u).id.roles.has(r) == true) { //I fucking hate js
-       await user.roles.remove(role)
+    if (user.roles.cache.has(r) == true) { //I fucking hate js
+        console.log("ree")
+        user.roles.remove(role)
     }
-    else if (users.roles.fetch(u).id.roles.has(r) == false) {
-        await user.roles.add(role)
+    else if (user.roles.cache.has(r) == false) {
+        console.log("ree2")
+        user.roles.add(role)
     }
-    console.log("bruh")
 } 
 
 client.login(token); //todo: comment the code you dumb shit
