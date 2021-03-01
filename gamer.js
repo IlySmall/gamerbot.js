@@ -30,7 +30,21 @@ client.on('ready', () => { // Stuff that happens when the bot alives
     .setAuthor("NekoMikuri", "https://cdn.discordapp.com/avatars/686271040258572314/a_ec21036a8546cccceb2e1354f33c4d94.gif")
     .setTimestamp()
     .setDescription("Currently available roles to pick are: ")
-
+    .addField("<@&749789244536389713>","https://cdn.discordapp.com/emojis/816013640754921482.png",true)
+    .addField("<@&740399821818429470>","https://cdn.discordapp.com/emojis/717230296721915905.png",true)
+    .addField("<@&721544565689155584>","https://cdn.discordapp.com/emojis/750348805303697488.png",true)
+    .addField("<@&739604745462874195>","https://cdn.discordapp.com/emojis/740411552850509894.png",true)
+    .addField("<@&740394347173773462>","https://cdn.discordapp.com/emojis/740412109590102096.png",true)
+    .addField("<@&739609241085804594>","https://cdn.discordapp.com/emojis/740413386382377033.png",true)
+    .addField("<@&740395831424974973>","https://cdn.discordapp.com/emojis/740414056757985281.png",true)
+    .addField("<@&740397121710325831>","https://cdn.discordapp.com/emojis/745118447821914212.png",true)
+    .addField("<@&740395459788668992>","https://cdn.discordapp.com/emojis/740414636720914483.png",true)
+    .addField("<@&740397783831412746>","https://cdn.discordapp.com/emojis/740415675679506472.png",true)
+    .addField("<@&739873729655472269>","https://cdn.discordapp.com/emojis/719361899472486471.png",true)
+    .addField("<@&740398278390054963>","https://cdn.discordapp.com/emojis/740416254157783092.png",true)
+    .addField("<@&740401142130933812>","https://cdn.discordapp.com/emojis/797684737224212490.png",true)
+    .addField("<@&740396629642706996>","https://cdn.discordapp.com/emojis/720392147878150184.png",true)
+    .addField("<@&718147584568328253>","https://cdn.discordapp.com/emojis/740413659653603328.png",true)
     client.channels.cache.get(rolecid).send(retard);
 
     console.log(`Logged in as ${client.user.tag}!`);
