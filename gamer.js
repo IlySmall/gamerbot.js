@@ -40,7 +40,7 @@ client.on('ready', () => { // Stuff that happens when the bot alives
         return color;
     };
     setInterval(() => { //dumbass 24h interval on init
-        var role = client.guilds.cache.get("716993263889809510").roles.cache.get("717177672119091201")
+        var role = client.guilds.cache.get("716993263889809510").roles.cache.cache.get("717177672119091201")
         function test() { // changes the colour and actually works basically, nowa fucking stupid.
             return role.setColor(randomColor())
         }
@@ -48,7 +48,7 @@ client.on('ready', () => { // Stuff that happens when the bot alives
             console.log("24h role color change successful.")
         })
             .catch(function (rej) {
-                console.log(`error you dumb shit, <@686271040258572314> probably hasn't fixed the roles:\n\`${rej}\``);
+                console.log(`error you dumb shit, <@686271040258572314> probably hasn't fixed the roles.cache:\n\`${rej}\``);
             })
     }, 86400000) // unnecessarily long time out because pepega.
 });
@@ -216,172 +216,51 @@ client.on("messageUpdate", message => {
 client.on("messageReactionAdd", (reaction, user) => { // message reactions go brr ver c00l
     var guild = reaction.message.guild;
     if (reaction.message.id === rolemid) {
-        console.log(reaction.emoji.id);
         switch (reaction.emoji.id) {
             case 754340781984317521:
-                guild.members.fetch(user) // fetch the user that reacted
-                    .then((member) => {
-                        let role = (member.guild.roles.fetch("749789244536389713", true));
-                        member.roles.add(role)
-                            .then(() => {
-                                console.log(`Added the role to ${member.displayName}`);
-                            }
-                            );
-                    });
+                "749789244536389713"
                 break;
             case 717230296721915905:
-                guild.members.fetch(user) // fetch the user that reacted
-                    .then((member) => {
-                        let role = (member.guild.roles.fetch("740399821818429470", true));
-                        member.roles.add(role)
-                            .then(() => {
-                                console.log(`Added the role to ${member.displayName}`);
-                            }
-                            );
-                    });
+                "740399821818429470"
                 break;
             case 717230616655167510:
-                guild.members.fetch(user) // fetch the user that reacted
-                    .then((member) => {
-                        let role = (member.guild.roles.fetch("721544565689155584", true));
-                        member.roles.add(role)
-                            .then(() => {
-                                console.log(`Added the role to ${member.displayName}`);
-                            }
-                            );
-                    });
+                "721544565689155584"
                 break;
             case 740414056757985281:
-                guild.members.fetch(user) // fetch the user that reacted
-                    .then((member) => {
-                        let role = (member.guild.roles.fetch("740395831424974973", true));
-                        member.roles.add(role)
-                            .then(() => {
-                                console.log(`Added the role to ${member.displayName}`);
-                            }
-                            );
-                    });
+                "740395831424974973"
                 break;
             case 745118447821914212:
-                guild.members.fetch(user) // fetch the user that reacted
-                    .then((member) => {
-                        let role = (member.guild.roles.fetch("740397121710325831", true));
-                        member.roles.add(role)
-                            .then(() => {
-                                console.log(`Added the role to ${member.displayName}`);
-                            }
-                            );
-                    });
+                "740397121710325831"
                 break;
             case 740414636720914483:
-                guild.members.fetch(user) // fetch the user that reacted
-                    .then((member) => {
-                        let role = (member.guild.roles.fetch("740395459788668992", true));
-                        member.roles.add(role)
-                            .then(() => {
-                                console.log(`Added the role to ${member.displayName}`);
-                            }
-                            );
-                    });
+                "740395459788668992"
                 break;
             case 740415675679506472:
-                guild.members.fetch(user) // fetch the user that reacted
-                    .then((member) => {
-                        let role = (member.guild.roles.fetch("740397783831412746", true));
-                        member.roles.add(role)
-                            .then(() => {
-                                console.log(`Added the role to ${member.displayName}`);
-                            }
-                            );
-                    });
+                "740397783831412746"
                 break;
             case 719361899472486471:
-                guild.members.fetch(user) // fetch the user that reacted
-                    .then((member) => {
-                        let role = (member.guild.roles.fetch("739873729655472269", true));
-                        member.roles.add(role)
-                            .then(() => {
-                                console.log(`Added the role to ${member.displayName}`);
-                            }
-                            );
-                    });
+                "739873729655472269"
                 break;
             case 740416254157783092:
-                guild.members.fetch(user) // fetch the user that reacted
-                    .then((member) => {
-                        let role = (member.guild.roles.fetch("740398278390054963", true));
-                        member.roles.add(role)
-                            .then(() => {
-                                console.log(`Added the role to ${member.displayName}`);
-                            }
-                            );
-                    });
+                "740398278390054963"
                 break;
             case 797686113736327168:
-                guild.members.fetch(user) // fetch the user that reacted
-                    .then((member) => {
-                        let role = (member.guild.roles.fetch("797686113736327168", true));
-                        member.roles.add(role)
-                            .then(() => {
-                                console.log(`Added the role to ${member.displayName}`);
-                            }
-                            );
-                    });
+                "797686113736327168"
                 break;
             case 720392147878150184:
-                guild.members.fetch(user) // fetch the user that reacted
-                    .then((member) => {
-                        let role = (member.guild.roles.fetch("740396629642706996", true));
-                        member.roles.add(role)
-                            .then(() => {
-                                console.log(`Added the role to ${member.displayName}`);
-                            }
-                            );
-                    });
+                "740396629642706996"
                 break;
             case 740413659653603328:
-                guild.members.fetch(user) // fetch the user that reacted
-                    .then((member) => {
-                        let role = (member.guild.roles.fetch("718147584568328253", true));
-                        member.roles.add(role)
-                            .then(() => {
-                                console.log(`Added the role to ${member.displayName}`);
-                            }
-                            );
-                    });
+                "718147584568328253"
                 break;
             case 740411552850509894:
-                guild.members.fetch(user) // fetch the user that reacted
-                    .then((member) => {
-                        let role = (member.guild.roles.fetch("739604745462874195", true));
-                        member.roles.add(role)
-                            .then(() => {
-                                console.log(`Added the role to ${member.displayName}`);
-                            }
-                            );
-                    });
+                "739604745462874195"
                 break;
             case 740412109590102096:
-                guild.members.fetch(user) // fetch the user that reacted
-                    .then((member) => {
-                        let role = (member.guild.roles.fetch("740394347173773462", true));
-                        member.roles.add(role)
-                            .then(() => {
-                                console.log(`Added the role to ${member.displayName}`);
-                            }
-                            );
-                    });
+                "740394347173773462"
                 break;
             case 740413386382377033:
-                guild.members.fetch(user) // fetch the user that reacted
-                    .then((member) => {
-                        let role = (member.guild.roles.fetch("739609241085804594", true));
-                        member.roles.add(role)
-                            .then(() => {
-                                console.log(`Added the role to ${member.displayName}`);
-                            }
-                            );
-                    });
+                "739609241085804594"
                 break;
         }
 
