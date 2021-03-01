@@ -328,10 +328,10 @@ async function cringe(u, r, g){
     var role = g.roles.cache.get(r)
     const user = await g.members.fetch(u.id);
 
-    if (user.role.has(r) == true) { //I fucking hate js
+    if (user.role.cache.has(r) == true) { //I fucking hate js
        await user.roles.remove(role)
     }
-    else if (user.role.has(r) == false) {
+    else if (user.role.cache.has(r) == false) {
         await user.roles.add(role)
     }
     console.log("bruh")
