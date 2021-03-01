@@ -275,7 +275,7 @@ client.on("messageReactionRemove", (reaction, user) => { // message reactions go
         console.log(reaction.emoji.id)
         switch (reaction.emoji.id) {
             case "754340781984317521":
-                cringe(user,"749789244536389713",guild)
+                cringe(user, "749789244536389713", guild)
                 break;
             case "717230296721915905":
                 cringe(user,"740399821818429470",guild)
@@ -328,10 +328,10 @@ async function cringe(u, r, g){
     var role = g.roles.cache.get(r)
     const user = await g.members.fetch(u.id)
     if (user.roles.cache.has(r) == true) { //I fucking hate js
-        user.roles.remove(role)
+       await user.roles.remove(role)
     }
     else if (user.roles.cache.has(r) == false) {
-        user.roles.add(role)
+        await user.roles.add(role)
     }
     console.log("bruh")
 } 
