@@ -1,4 +1,4 @@
-const Discord = require('discord.js'); // if you don't have this you can't commit discord
+const Discord = require('discord.js');
 var { prefix, token, globalCleanup, logchannel } = require('./cfg.json');
 setInterval(() => {
     var cfg = require('./cfg.json');
@@ -7,33 +7,31 @@ setInterval(() => {
     statusmsg = cfg.statusmsg;
     globalCleanup = cfg.globalCleanup;
 }, 500);
-const fs = require('fs'); // for checking filesystem.
-const client = new Discord.Client(); // read please
+const fs = require('fs');
+const { defaultMaxListeners } = require('ws');
+const client = new Discord.Client();
 
-client.commands = new Discord.Collection(); // array<T> sorta of gay thing of commands.
-const cooldowns = new Discord.Collection(); // ^ by cooldowns
-const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js')); // Okay so, it looks for the folder "commands"
-// then get this, it looks for a file that ends with .js
-// yeah, that's a command now.
+client.commands = new Discord.Collection();
+const cooldowns = new Discord.Collection();
+const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
-for (const file of commandFiles) { // does node magic on the files
-    const command = require(`./commands/${file}`); // how 2 command it
-    client.commands.set(command.name, command); // command it exist
+for (const file of commandFiles) {
+    const command = require(`./commands/${file}`);
+    client.commands.set(command.name, command);
 }
 
-
-client.on('ready', () => { // Stuff that happens when the bot alives
+client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
-    const randomColor = () => { // does random color stuff.
+    const randomColor = () => {
     let color = '#';
     for (let i = 0; i < 6; i++) {                                                           const random = Math.random();
-        const bit = (random * 16) | 0;                                                      color += (bit).toString(16); // uses bitwise cancer to make a string that gets concatenated to color.
+        const bit = (random * 16) | 0;                                                      color += (bit).toString(16);
     };
     return color;
 };
 	setInterval(() => { //dumbass 24h interval on init
         var role = client.guilds.cache.get("716993263889809510").roles.cache.get("717177672119091201")
-        function test() { // changes the colour and actually works basically, nowa fucking stupid.
+        function test() {
             return role.setColor(randomColor())
         }
         test().then(function () {
@@ -42,19 +40,19 @@ client.on('ready', () => { // Stuff that happens when the bot alives
             .catch(function (rej) {
                 console.log(`error you dumb shit, <@686271040258572314> probably hasn't fixed the roles:\n\`${rej}\``);
             })
-    }        , 86400000) // unnecessarily long time out because pepega.
+    }        , 86400000)
 });
 
 client.on('message', message => {
-    if (!message.content.startsWith(prefix)) { // The prefix if you can't read I apologise for you disability.
-        client.user.setActivity({ name: `${statusmsg}` }) // sets status msg.
+    if (!message.content.startsWith(prefix)) {
+        client.user.setActivity({ name: `${statusmsg}` })
         return;
     }
 
-    const args = message.content.slice(prefix.length).trim().split(/ +/); // yeah okay sure. It works!
-    const commandName = args.shift().toLowerCase();  // enumeration cringe.
+    const args = message.content.slice(prefix.length).trim().split(/ +/);
+    const commandName = args.shift().toLowerCase();
     var content;
-    if (!args[1]) { // makes magic happen don't worry about it standard checks imagine caring
+    if (!args[1]) {
         content = message.content.slice(prefix.length + commandName.length + 1).trim();
     }
     else {
@@ -62,32 +60,30 @@ client.on('message', message => {
             + commandName.length + 1).trim();
     }
 
-    const command = client.commands.get(commandName) // gets command if you didn't understand this you probably shouldn't touch this.
-        || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName)); // It's legit the same shit.
+    const command = client.commands.get(commandName)
+        || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
 
-    if (!command) return; // If it's not command don't do it.
+    if (!command) return;
 
     if (!cooldowns.has(command.name)) {
-        cooldowns.set(command.name, new Discord.Collection()); // Basically an Array<T> that cooldowns get shoved into.
-        // uses new as it's specific to the asshole who just called the command.
+        cooldowns.set(command.name, new Discord.Collection());
     }
 
-    const now = Date.now(); // Again if you don't understand this you probably can't read
-    const timestamps = cooldowns.get(command.name); // The cooldown for the command.
-    const cooldownAmount = (command.cooldown || 3) * 1000; // again, read.
+    const now = Date.now();
+    const timestamps = cooldowns.get(command.name);
+    const cooldownAmount = (command.cooldown || 3) * 1000;
 
     if (timestamps.has(message.author.id)) {
-        const expirationTime = timestamps.get(message.author.id) + cooldownAmount; // basically, checks if they can funny command.
+        const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
 
-        if (now < expirationTime) { // If it's not expired then uh look below.
-            const timeLeft = (expirationTime - now) / 1000; // maths for when can I commit command again
+        if (now < expirationTime) {
+            const timeLeft = (expirationTime - now) / 1000;
             return message.reply(`please wait ${timeLeft.toFixed(1)} more second(s) before reusing the \`${command.name}\` command.`);
-            // above tells you that info that yeah I mentioned already just read please.
         }
     }
 
     if (command.guildOnly && message.channel.type === 'dm') {
-        return message.reply('I can\'t execute that command inside DMs!'); // read the string
+        return message.reply('I can\'t execute that command inside DMs!');
     }
 
 
@@ -101,7 +97,7 @@ client.on('message', message => {
                 .catch(console.error);
         }
 
-        switch (command.permissions) { // Don't touch this you fucking fool.
+        switch (command.permissions) {
             case "admin noargs": {
                 if (!message.guild.members.cache.get(message.author.id).hasPermission('ADMINISTRATOR') && args.length == 0) {
                     console.log("bruh1")
@@ -162,11 +158,11 @@ client.on('message', message => {
         command.execute(message, args, content);
     } catch (error) {
         console.error(error);
-        message.reply('there was an error trying to execute that command!'); // the command didn't work basically.
+        message.reply('there was an error trying to execute that command!');
     }
 });
 
-client.on("messageDelete", message => { // This make the message delete go brrrr.
+client.on("messageDelete", message => {
     const delmsg = new Discord.MessageEmbed()
     .setColor('#ff0000')
     .setTitle('Message deleted in '+message.channel.name)
