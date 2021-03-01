@@ -11,6 +11,8 @@ const fs = require('fs'); // for checking filesystem.
 const client = new Discord.Client(); // read please
 let rolecid = "740408169712320592"
 let rolemid = "816023313495228446"
+const rolearr = ["749789244536389713", "740399821818429470", "721544565689155584", "740395831424974973", "740397121710325831", "740395459788668992", "740397783831412746", "739873729655472269", "740398278390054963", "797686113736327168", "740396629642706996", "718147584568328253", "739604745462874195", "740394347173773462", "739609241085804594"]
+const emojiarr = ["754340781984317521", "717230296721915905", "717230616655167510", "740414056757985281", "745118447821914212", "740414636720914483", "740415675679506472", "719361899472486471", "740416254157783092", "797686113736327168", "720392147878150184", "740413659653603328", "740411552850509894", "740412109590102096", "740413386382377033"]
 client.commands = new Discord.Collection(); // array<T> sorta of gay thing of commands.
 const cooldowns = new Discord.Collection(); // ^ by cooldowns
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js')); // Okay so, it looks for the folder "commands"
@@ -23,11 +25,11 @@ for (const file of commandFiles) { // does node magic on the files
 }
 
 client.on('ready', () => { // Stuff that happens when the bot alives
-    client.channels.cache.get(rolecid).messages.fetch(rolemid).then(m => {
-        console.log("Cached reaction message.");
-    }).catch(e => {
-        console.error("Error loading message.");
-        console.error(e);
+    
+    emojiarr.forEach(el => {  //this shit is broken <<<<<<<<<<<<<<<<<<<<<<<<<
+        .react(message.guild.emojis.cache.get(el))
+            .then(console.log)
+            .catch(console.error);
     });
 
     console.log(`Logged in as ${client.user.tag}!`);
@@ -215,116 +217,30 @@ client.on("messageUpdate", message => {
 
 client.on("messageReactionAdd", (reaction, user) => { // message reactions go brr ver c00l
     var guild = reaction.message.guild;
+    var reaction = reaction;
     if (reaction.message.id === rolemid) {
-        console.log(reaction.emoji.id)
-        switch (reaction.emoji.id) {
-            case "754340781984317521":
-                cringe(user,"749789244536389713",guild)
-                break;
-            case "717230296721915905":
-                cringe(user,"740399821818429470",guild)
-                break;
-            case "717230616655167510":
-                cringe(user,"721544565689155584",guild)
-                break;
-            case "740414056757985281":
-                cringe(user,"740395831424974973",guild)
-                break;
-            case "745118447821914212":
-                cringe(user,"740397121710325831",guild)
-                break;
-            case "740414636720914483":
-                cringe(user,"740395459788668992",guild)
-                break;
-            case "740415675679506472":
-                cringe(user,"740397783831412746",guild)
-                break;
-            case "719361899472486471":
-                cringe(user,"739873729655472269",guild)
-                break;
-            case "740416254157783092":
-                cringe(user,"740398278390054963",guild)
-                break;
-            case "797686113736327168":
-                cringe(user,"797686113736327168",guild)
-                break;
-            case "720392147878150184":
-                cringe(user,"740396629642706996",guild)
-                break;
-            case "740413659653603328":
-                cringe(user,"718147584568328253",guild)
-                break;
-            case "740411552850509894":
-                cringe(user,"739604745462874195",guild)
-                break;
-            case "740412109590102096":
-                cringe(user,"740394347173773462",guild)
-                break;
-            case "740413386382377033":
-                cringe(user,"739609241085804594",guild)
-                break;
-        }
-
+        emojiarr.forEach(function (e, i) {
+            if (reaction.emoji.id == e) {
+                cringe(user, rolearr[i], guild)
+            }
+        });
     }
 })
-
 
 client.on("messageReactionRemove", (reaction, user) => { // message reactions go brr ver c00l
     var guild = reaction.message.guild;
+    var reaction = reaction;
     if (reaction.message.id === rolemid) {
-        console.log(reaction.emoji.id)
-        switch (reaction.emoji.id) {
-            case "754340781984317521":
-                cringe(user, "749789244536389713", guild)
-                break;
-            case "717230296721915905":
-                cringe(user,"740399821818429470",guild)
-                break;
-            case "717230616655167510":
-                cringe(user,"721544565689155584",guild)
-                break;
-            case "740414056757985281":
-                cringe(user,"740395831424974973",guild)
-                break;
-            case "745118447821914212":
-                cringe(user,"740397121710325831",guild)
-                break;
-            case "740414636720914483":
-                cringe(user,"740395459788668992",guild)
-                break;
-            case "740415675679506472":
-                cringe(user,"740397783831412746",guild)
-                break;
-            case "719361899472486471":
-                cringe(user,"739873729655472269",guild)
-                break;
-            case "740416254157783092":
-                cringe(user,"740398278390054963",guild)
-                break;
-            case "797686113736327168":
-                cringe(user,"797686113736327168",guild)
-                break;
-            case "720392147878150184":
-                cringe(user,"740396629642706996",guild)
-                break;
-            case "740413659653603328":
-                cringe(user,"718147584568328253",guild)
-                break;
-            case "740411552850509894":
-                cringe(user,"739604745462874195",guild)
-                break;
-            case "740412109590102096":
-                cringe(user,"740394347173773462",guild)
-                break;
-            case "740413386382377033":
-                cringe(user,"739609241085804594",guild)
-                break;
-        }
-
+        emojiarr.forEach(function (e, i) {
+            if (reaction.emoji.id == e) {
+                cringe2(user, rolearr[i], guild)
+            }
+        });
     }
 })
 
-async function cringe(u, r, g){
+
+async function cringe(u, r, g) {
     var role = g.roles.cache.get(r)
     const user = await g.members.fetch(u.id)
     if (user.roles.cache.has(r) == true) { //I fucking hate js
@@ -335,6 +251,19 @@ async function cringe(u, r, g){
         console.log("ree2")
         user.roles.add(role)
     }
-} 
+}
+async function cringe2(u, r, g) {
+    var role = g.roles.cache.get(r)
+    const user = await g.members.fetch(u.id)
+    if (user.roles.cache.has(r) == true) { //I fucking hate js
+        console.log("ree2")
+        user.roles.add(role)
+    }
+    else if (user.roles.cache.has(r) == false) {
+
+        console.log("ree")
+        user.roles.remove(role)
+    }
+} //THIS SHOULDN'T FUCKING WORK AT ALL REEEEEEEEEEEEEEEEEEEEEEEE
 
 client.login(token); //todo: comment the code you dumb shit
