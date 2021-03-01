@@ -213,7 +213,7 @@ client.on("messageUpdate", message => {
     //todo
 })
 
-client.on("messageReactionAdd", async(reaction, user) => { // message reactions go brr ver c00l
+client.on("messageReactionAdd", (reaction, user) => { // message reactions go brr ver c00l
     var guild = reaction.message.guild;
     if (reaction.message.id === rolemid) {
         switch (reaction.emoji.id) {
