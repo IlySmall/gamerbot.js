@@ -25,11 +25,16 @@ for (const file of commandFiles) { // does node magic on the files
 }
 
 client.on('ready', () => { // Stuff that happens when the bot alives
-
-    emojiarr.forEach(el => {  //this shit is broken <<<<<<<<<<<<<<<<<<<<<<<<<
+    emojiarr.forEach(el => {
         .react(message.guild.emojis.cache.get(el))
             .then(console.log)
             .catch(console.error);
+    });
+    client.channels.cache.get(rolecid).messages.fetch(rolemid).then(m => {
+        console.log("Cached reaction message.");
+    }).catch(e => {
+        console.error("Error loading message.");
+        console.error(e);
     });
 
     console.log(`Logged in as ${client.user.tag}!`);
@@ -242,13 +247,14 @@ client.on("messageReactionRemove", (reaction, user) => { // message reactions go
 
 async function cringe(u, r, g) {
     var role = g.roles.cache.get(r)
-    const user = await g.members.fetch(u.id);
-
-    if (user.role.cache.has(r) == true) { //I fucking hate js
-       await user.roles.remove(role)
+    const user = await g.members.fetch(u.id)
+    if (user.roles.cache.has(r) == true) { //I fucking hate js
+        console.log("ree")
+        user.roles.remove(role)
     }
-    else if (user.role.cache.has(r) == false) {
-        await user.roles.add(role)
+    else if (user.roles.cache.has(r) == false) {
+        console.log("ree2")
+        user.roles.add(role)
     }
 }
 async function cringe2(u, r, g) {
