@@ -222,7 +222,7 @@ client.on("messageReactionAdd", (reaction, user) => { // message reactions go br
     if (reaction.message.id === rolemid) {
         emojiarr.forEach(function (e, i) {
             if (reaction.emoji.id == e) {
-                user.roles.add(guild.roles.cache.get(rolearr[i]))
+                guild.members.cache.get(user.id).roles.add(guild.roles.cache.get(rolearr[i]))
             }
         });
     }
@@ -234,7 +234,7 @@ client.on("messageReactionRemove", (reaction, user) => { // message reactions go
     if (reaction.message.id === rolemid) {
         emojiarr.forEach(function (e, i) {
             if (reaction.emoji.id == e) {
-                user.roles.remove(guild.roles.cache.get(rolearr[i]))
+                guild.members.cache.get(user.id).roles.remove(guild.roles.cache.get(rolearr[i]))
             }
         });
     }
