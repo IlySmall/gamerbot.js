@@ -9,8 +9,8 @@ setInterval(() => {
 }, 500);
 const fs = require('fs'); // for checking filesystem.
 const client = new Discord.Client(); // read please
-let rolecid="740408169712320592"
-let rolemid=""
+let rolecid = "740408169712320592"
+let rolemid = "816023313495228446"
 client.commands = new Discord.Collection(); // array<T> sorta of gay thing of commands.
 const cooldowns = new Discord.Collection(); // ^ by cooldowns
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js')); // Okay so, it looks for the folder "commands"
@@ -22,40 +22,23 @@ for (const file of commandFiles) { // does node magic on the files
     client.commands.set(command.name, command); // command it exist
 }
 
-
 client.on('ready', () => { // Stuff that happens when the bot alives
-    const retard = new Discord.MessageEmbed()
-    .setColor('#800080')
-    .setTitle("Role picker.")
-    .setAuthor("NekoMikuri", "https://cdn.discordapp.com/avatars/686271040258572314/a_ec21036a8546cccceb2e1354f33c4d94.gif")
-    .setTimestamp()
-    .setDescription("Currently available roles to pick are: ")
-    .addField("<@&749789244536389713>","<:HanaBLUH:754340781984317521>",true)
-    .addField("<@&740399821818429470>","<:WhyChama:717230296721915905>",true)
-    .addField("<@&721544565689155584>","<:Angery:717230616655167510>",true)
-    .addField("<@&739604745462874195>","<:emaBeer:740411552850509894>",true)
-    .addField("<@&740394347173773462>","<:FlareWat:740412109590102096>",true)
-    .addField("<@&739609241085804594>","<:GibaraDISGUST:740413386382377033>",true)
-    .addField("<@&740395831424974973>","<:hinatayell:740414056757985281>",true)
-    .addField("<@&740397121710325831>","<:Konlulu:745118447821914212>",true)
-    .addField("<@&740395459788668992>","<:aquapout:740414636720914483>",true)
-    .addField("<@&740397783831412746>","<:MorinakaCry:740415675679506472>",true)
-    .addField("<@&739873729655472269>","<:PEKOOO:719361899472486471>",true)
-    .addField("<@&740398278390054963>","<:shionDrool:740416254157783092>",true)
-    .addField("<@&740401142130933812>","<:RushiaAlterSmug:797686113736327168>",true)
-    .addField("<@&740396629642706996>","<:YuyaCry:720392147878150184>",true)
-    .addField("<@&718147584568328253>","<:pekpo:740413659653603328>",true)
-    client.channels.cache.get(rolecid).send(retard);
-
+    client.channels.get(rolecid).fetchMessage(rolemid).then(m => {
+        console.log("Cached reaction message.");
+    }).catch(e => {
+        console.error("Error loading message.");
+        console.error(e);
+    });
     console.log(`Logged in as ${client.user.tag}!`);
     const randomColor = () => { // does random color stuff.
-    let color = '#';
-    for (let i = 0; i < 6; i++) {                                                           const random = Math.random();
-        const bit = (random * 16) | 0;                                                      color += (bit).toString(16); // uses bitwise cancer to make a string that gets concatenated to color.
+        let color = '#';
+        for (let i = 0; i < 6; i++) {
+            const random = Math.random();
+            const bit = (random * 16) | 0; color += (bit).toString(16); // uses bitwise cancer to make a string that gets concatenated to color.
+        };
+        return color;
     };
-    return color;
-};
-	setInterval(() => { //dumbass 24h interval on init
+    setInterval(() => { //dumbass 24h interval on init
         var role = client.guilds.cache.get("716993263889809510").roles.cache.get("717177672119091201")
         function test() { // changes the colour and actually works basically, nowa fucking stupid.
             return role.setColor(randomColor())
@@ -66,7 +49,7 @@ client.on('ready', () => { // Stuff that happens when the bot alives
             .catch(function (rej) {
                 console.log(`error you dumb shit, <@686271040258572314> probably hasn't fixed the roles:\n\`${rej}\``);
             })
-    }        , 86400000) // unnecessarily long time out because pepega.
+    }, 86400000) // unnecessarily long time out because pepega.
 });
 
 client.on('message', message => {
@@ -192,21 +175,23 @@ client.on('message', message => {
 
 client.on("messageDelete", message => { // This make the message delete go brrrr.
     const delmsg = new Discord.MessageEmbed()
-    .setColor('#ff0000')
-    .setTitle('Message deleted in '+message.channel.name)
-    .setAuthor(message.author.username, message.author.displayAvatarURL({"format":"png","size":1024}))
-    .setTimestamp()
-    .setDescription(message.content)
-    if(message.attachments.array[0]){
+        .setColor('#ff0000')
+        .setTitle('Message deleted in ' + message.channel.name)
+        .setAuthor(message.author.username, message.author.displayAvatarURL({ "format": "png", "size": 1024 }))
+        .setTimestamp()
+        .setDescription(message.content)
+    if (message.attachments.array[0]) {
         delmsg.setThumbnail(message.attachments.array()[0].proxyURL)
-    
-    if(message.attachments){message.attachments.array().forEach(attachment => {
-        if(!attachment.proxyURL.includes(".png")||!attachment.proxyURL.includes(".jpg")||!attachment.proxyURL.includes(".gif")){
-            delmsg.addField("Attachment:", attachment.proxyURL, true)
+
+        if (message.attachments) {
+            message.attachments.array().forEach(attachment => {
+                if (!attachment.proxyURL.includes(".png") || !attachment.proxyURL.includes(".jpg") || !attachment.proxyURL.includes(".gif")) {
+                    delmsg.addField("Attachment:", attachment.proxyURL, true)
+                }
+                else { delmsg.setImage(attachment.proxyURL); }
+            });
         }
-            else{delmsg.setImage(attachment.proxyURL);}
-    });
-    }}
+    }
     client.channels.cache.get(logchannel).send(delmsg);
 });
 
@@ -224,7 +209,183 @@ client.on("messageDelete", message => { // This make the message delete go brrrr
 //todo: move into bulk delete instead of event handler;
 
 client.on("messageUpdate", message => {
-//todo
+    //todo
+})
+
+client.on("messageReactionAdd", (reaction, user) => {
+    if (reaction.message.id === rolemid) {
+        switch (reaction.emoji.id) {
+            case 754340781984317521:
+                guild.fetchMember(user) // fetch the user that reacted
+                    .then((member) => {
+                        let role = (member.guild.roles.find(role => role.id == "749789244536389713"));
+                        member.addRole(role)
+                            .then(() => {
+                                console.log(`Added the role to ${member.displayName}`);
+                            }
+                            );
+                    });
+                break;
+            case 717230296721915905:
+                guild.fetchMember(user) // fetch the user that reacted
+                    .then((member) => {
+                        let role = (member.guild.roles.find(role => role.id == "740399821818429470"));
+                        member.addRole(role)
+                            .then(() => {
+                                console.log(`Added the role to ${member.displayName}`);
+                            }
+                            );
+                    });
+                break;
+            case 717230616655167510:
+                guild.fetchMember(user) // fetch the user that reacted
+                    .then((member) => {
+                        let role = (member.guild.roles.find(role => role.id == "721544565689155584"));
+                        member.addRole(role)
+                            .then(() => {
+                                console.log(`Added the role to ${member.displayName}`);
+                            }
+                            );
+                    });
+                break;
+            case 740414056757985281:
+                guild.fetchMember(user) // fetch the user that reacted
+                    .then((member) => {
+                        let role = (member.guild.roles.find(role => role.id == "740395831424974973"));
+                        member.addRole(role)
+                            .then(() => {
+                                console.log(`Added the role to ${member.displayName}`);
+                            }
+                            );
+                    });
+                break;
+            case 745118447821914212:
+                guild.fetchMember(user) // fetch the user that reacted
+                    .then((member) => {
+                        let role = (member.guild.roles.find(role => role.id == "740397121710325831"));
+                        member.addRole(role)
+                            .then(() => {
+                                console.log(`Added the role to ${member.displayName}`);
+                            }
+                            );
+                    });
+                break;
+            case 740414636720914483:
+                guild.fetchMember(user) // fetch the user that reacted
+                    .then((member) => {
+                        let role = (member.guild.roles.find(role => role.id == "740395459788668992"));
+                        member.addRole(role)
+                            .then(() => {
+                                console.log(`Added the role to ${member.displayName}`);
+                            }
+                            );
+                    });
+                break;
+            case 740415675679506472:
+                guild.fetchMember(user) // fetch the user that reacted
+                    .then((member) => {
+                        let role = (member.guild.roles.find(role => role.id == "740397783831412746"));
+                        member.addRole(role)
+                            .then(() => {
+                                console.log(`Added the role to ${member.displayName}`);
+                            }
+                            );
+                    });
+                break;
+            case 719361899472486471:
+                guild.fetchMember(user) // fetch the user that reacted
+                    .then((member) => {
+                        let role = (member.guild.roles.find(role => role.id == "739873729655472269"));
+                        member.addRole(role)
+                            .then(() => {
+                                console.log(`Added the role to ${member.displayName}`);
+                            }
+                            );
+                    });
+                break;
+            case 740416254157783092:
+                guild.fetchMember(user) // fetch the user that reacted
+                    .then((member) => {
+                        let role = (member.guild.roles.find(role => role.id == "740398278390054963"));
+                        member.addRole(role)
+                            .then(() => {
+                                console.log(`Added the role to ${member.displayName}`);
+                            }
+                            );
+                    });
+                break;
+            case 797686113736327168:
+                guild.fetchMember(user) // fetch the user that reacted
+                    .then((member) => {
+                        let role = (member.guild.roles.find(role => role.id == "797686113736327168"));
+                        member.addRole(role)
+                            .then(() => {
+                                console.log(`Added the role to ${member.displayName}`);
+                            }
+                            );
+                    });
+                break;
+            case 720392147878150184:
+                guild.fetchMember(user) // fetch the user that reacted
+                    .then((member) => {
+                        let role = (member.guild.roles.find(role => role.id == "740396629642706996"));
+                        member.addRole(role)
+                            .then(() => {
+                                console.log(`Added the role to ${member.displayName}`);
+                            }
+                            );
+                    });
+                break;
+            case 740413659653603328:
+                guild.fetchMember(user) // fetch the user that reacted
+                    .then((member) => {
+                        let role = (member.guild.roles.find(role => role.id == "718147584568328253"));
+                        member.addRole(role)
+                            .then(() => {
+                                console.log(`Added the role to ${member.displayName}`);
+                            }
+                            );
+                    });
+                break;
+            case 740411552850509894:
+                guild.fetchMember(user) // fetch the user that reacted
+                    .then((member) => {
+                        let role = (member.guild.roles.find(role => role.id == "739604745462874195"));
+                        member.addRole(role)
+                            .then(() => {
+                                console.log(`Added the role to ${member.displayName}`);
+                            }
+                            );
+                    });
+                break;
+            case 740412109590102096:
+                guild.fetchMember(user) // fetch the user that reacted
+                    .then((member) => {
+                        let role = (member.guild.roles.find(role => role.id == "740394347173773462"));
+                        member.addRole(role)
+                            .then(() => {
+                                console.log(`Added the role to ${member.displayName}`);
+                            }
+                            );
+                    });
+                break;
+            case 740413386382377033:
+                guild.fetchMember(user) // fetch the user that reacted
+                    .then((member) => {
+                        let role = (member.guild.roles.find(role => role.id == "739609241085804594"));
+                        member.addRole(role)
+                            .then(() => {
+                                console.log(`Added the role to ${member.displayName}`);
+                            }
+                            );
+                    });
+                break;
+        }
+
+    }
+
+
+
 })
 
 client.login(token); //todo: comment the code you dumb shit
