@@ -43,7 +43,7 @@ client.on('ready', () => { // Stuff that happens when the bot alives
         return color;
     };
     setInterval(() => { //dumbass 24h interval on init
-        var role = client.guilds.cache.get("716993263889809510").roles.cache.cache.get("717177672119091201")
+        var role = client.guilds.cache.get("716993263889809510").roles.cache.get("717177672119091201")
         function test() { // changes the colour and actually works basically, nowa fucking stupid.
             return role.setColor(randomColor())
         }
