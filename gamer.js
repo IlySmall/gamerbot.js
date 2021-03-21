@@ -179,25 +179,51 @@ client.on('message', message => {
 
 client.on("messageDelete", message => { // This make the message delete go brrrr.
     const delmsg = new Discord.MessageEmbed()
+        .setTitle("Message deleted in NeKommunity (hopefully)")
         .setColor('#ff0000')
-        .setTitle('Message deleted in ' + message.channel.name)
-        .setAuthor(message.author.username, message.author.displayAvatarURL({ "format": "png", "size": 1024 }))
+        .setAuthor(message.author.tag, message.author.displayAvatarURL({ "format": "png", "size": 1024 }))
         .setTimestamp()
-        .setDescription(message.content)
-    if (message.attachments.array[0]) {
-        delmsg.setThumbnail(message.attachments.array()[0].proxyURL)
-
-        if (message.attachments) {
-            message.attachments.array().forEach(attachment => {
-                if (!attachment.proxyURL.includes(".png") || !attachment.proxyURL.includes(".jpg") || !attachment.proxyURL.includes(".gif")) {
-                    delmsg.addField("Attachment:", attachment.proxyURL, true)
-                }
-                else { delmsg.setImage(attachment.proxyURL); }
-            });
-        }
+        .setDescription(`Message deleted in <#${message.channel.id}> [Jump to channel](${message.url} 'Jump to channel')`)
+        .addField("Message content: ", message.content || "Media.", false)
+    if (message.attachments) {
+        message.attachments.array().forEach(attachment => {
+            delmsg.addField("Attachment:", attachment.proxyURL, true)
+            if (attachment.proxyURL.includes(".png") || attachment.proxyURL.includes(".jpg") || attachment.proxyURL.includes(".gif")) {
+                delmsg.setImage(attachment.proxyURL);
+            }
+        });
     }
+
     client.channels.cache.get(logchannel).send(delmsg);
 });
+
+client.on("messageUpdate", (oldMessage, newMessage) => { // This make the message rdit go brrrr.
+    if (oldMessage.content === newMessage.content) {
+        return;
+    }
+
+    let logEmbed = new Discord.MessageEmbed()
+        .setTitle("Message edited in NeKommunity (hopefully)")
+        .setAuthor(oldMessage.author.tag, oldMessage.author.displayAvatarURL({ "format": "png", "size": 1024 })) //gets the author's avatar url.
+        .setThumbnail(oldMessage.author.avatarURL)
+        .setColor("#ffd500")
+        .setDescription(`Message edited in <#${oldMessage.channel.id}> [Jump to message](${oldMessage.url} 'Jump to message')`)
+        .addField("**Before**", oldMessage.content || "Media.", true)
+        .addField("**After**", newMessage.content, true)
+        .setTimestamp()
+        .setFooter("User ID: " + oldMessage.author.id);
+    if (oldMessage.attachments) {
+        oldMessage.attachments.array().forEach(attachment => {
+            logEmbed.addField("Attachment:", attachment.proxyURL, true)
+            if (attachment.proxyURL.includes(".png") || attachment.proxyURL.includes(".jpg") || attachment.proxyURL.includes(".gif")) {
+                logEmbed.setImage(attachment.proxyURL);
+            }
+        });
+    }
+
+    client.channels.cache.get(logchannel).send(logEmbed);
+
+})
 
 /*client.on("messageDeleteBulk", messages => {
     const delmsgs = new Discord.MessageEmbed()
@@ -212,9 +238,6 @@ client.on("messageDelete", message => { // This make the message delete go brrrr
 })*/
 //todo: move into bulk delete instead of event handler;
 
-client.on("messageUpdate", message => {
-    //todo
-})
 
 client.on("messageReactionAdd", (reaction, user) => { // message reactions go brr ver c00l
     var guild = reaction.message.guild;
