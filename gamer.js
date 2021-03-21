@@ -194,7 +194,9 @@ client.on("messageDelete", message => { // This make the message delete go brrrr
         });
     }
 
-    client.channels.cache.get(logchannel).send(delmsg);
+    let loggingChannel = newMessage.guild.channels.find(ch => ch.name === logchannel)
+    if(!loggingChannel) return;
+    loggingChannel.send(delmsg);
 });
 
 client.on("messageUpdate", (oldMessage, newMessage) => { // This make the message rdit go brrrr.
@@ -221,8 +223,9 @@ client.on("messageUpdate", (oldMessage, newMessage) => { // This make the messag
         });
     }
 
-    client.channels.cache.get(logchannel).send(logEmbed);
-
+    let loggingChannel = newMessage.guild.channels.find(ch => ch.name === logchannel)
+    if(!loggingChannel) return;
+    loggingChannel.send(logEmbed);
 })
 
 /*client.on("messageDeleteBulk", messages => {
