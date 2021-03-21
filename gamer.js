@@ -194,7 +194,7 @@ client.on("messageDelete", message => { // This make the message delete go brrrr
         });
     }
 
-    let loggingChannel = newMessage.guild.channels.cache.find(ch => ch.name === logchannel)
+    let loggingChannel = message.guild.channels.cache.find(ch => ch.name === logchannel)
     if(!loggingChannel) return;
     loggingChannel.send(delmsg);
 });
