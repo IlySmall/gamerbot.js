@@ -211,7 +211,7 @@ client.on("messageUpdate", (oldMessage, newMessage) => { // This make the messag
         .setColor("#ffd500")
         .setDescription(`Message edited in <#${oldMessage.channel.id}> [Jump to message](${oldMessage.url} 'Jump to message')`)
         .addField("**Before**", oldMessage.content || "Media.", true)
-        .addField("**After**", newMessage.content, true)
+        .addField("**After**", newMessage.content || "Empty", true)
         .setTimestamp()
         .setFooter("User ID: " + oldMessage.author.id);
     if (oldMessage.attachments) {
@@ -237,8 +237,8 @@ client.on("guildMemberAdd", member =>{
         .setTimestamp()
         .setFooter("User ID: " + member.user.id);
     let loggingChannel = member.guild.channels.cache.find(ch => ch.name === logchannel)
-    if(!loggingChannel) return;
-    loggingChannel.send(log)
+    if(!loggingChannel) {console.log("fail"); return;}
+    loggingChannel.send(log);
 })
 
 client.on("guildMemberRemove", member =>{
@@ -250,7 +250,7 @@ client.on("guildMemberRemove", member =>{
         .setTimestamp()
         .setFooter("User ID: " + member.user.id);
     let loggingChannel = member.guild.channels.cache.find(ch => ch.name === logchannel)
-    if(!loggingChannel) return;
+    if(!loggingChannel) {console.log("fail"); return;}
     loggingChannel.send(log)
 })
 
