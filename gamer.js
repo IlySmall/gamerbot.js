@@ -236,8 +236,9 @@ client.on("guildMemberAdd", member =>{
         .setDescription(`A new user has joined ${member.guild.name}! Their account was created at ${member.user.createdAt}`)
         .setTimestamp()
         .setFooter("User ID: " + member.user.id);
+
     let loggingChannel = member.guild.channels.cache.find(ch => ch.name === logchannel)
-    if(!loggingChannel) {console.log("fail"); return;}
+    if(!loggingChannel) return;
     loggingChannel.send(log);
 })
 
@@ -250,7 +251,7 @@ client.on("guildMemberRemove", member =>{
         .setTimestamp()
         .setFooter("User ID: " + member.user.id);
     let loggingChannel = member.guild.channels.cache.find(ch => ch.name === logchannel)
-    if(!loggingChannel) {console.log("fail"); return;}
+    if(!loggingChannel) return;
     loggingChannel.send(log)
 })
 
