@@ -178,7 +178,7 @@ client.on('message', message => {
 });
 
 client.on("messageDelete", message => { // This make the message delete go brrrr.
-    const delmsg = new Discord.MessageEmbed()
+    let log = new Discord.MessageEmbed()
         .setTitle("Message deleted in NeKommunity (hopefully)")
         .setColor('#ff0000')
         .setAuthor(message.author.tag, message.author.displayAvatarURL({ "format": "png", "size": 1024 }))
@@ -187,16 +187,16 @@ client.on("messageDelete", message => { // This make the message delete go brrrr
         .addField("Message content: ", message.content || "Media.", false)
     if (message.attachments) {
         message.attachments.array().forEach(attachment => {
-            delmsg.addField("Attachment:", attachment.proxyURL, true)
+            log.addField("Attachment:", attachment.proxyURL, true)
             if (attachment.proxyURL.includes(".png") || attachment.proxyURL.includes(".jpg") || attachment.proxyURL.includes(".gif")) {
-                delmsg.setImage(attachment.proxyURL);
+                log.setImage(attachment.proxyURL);
             }
         });
     }
 
     let loggingChannel = message.guild.channels.cache.find(ch => ch.name === logchannel)
     if(!loggingChannel) return;
-    loggingChannel.send(delmsg);
+    loggingChannel.send(log);
 });
 
 client.on("messageUpdate", (oldMessage, newMessage) => { // This make the message rdit go brrrr.
@@ -204,7 +204,7 @@ client.on("messageUpdate", (oldMessage, newMessage) => { // This make the messag
         return;
     }
 
-    let logEmbed = new Discord.MessageEmbed()
+    let log = new Discord.MessageEmbed()
         .setTitle("Message edited in NeKommunity (hopefully)")
         .setAuthor(oldMessage.author.tag, oldMessage.author.displayAvatarURL({ "format": "png", "size": 1024 })) //gets the author's avatar url.
         .setThumbnail(oldMessage.author.avatarURL)
@@ -216,31 +216,43 @@ client.on("messageUpdate", (oldMessage, newMessage) => { // This make the messag
         .setFooter("User ID: " + oldMessage.author.id);
     if (oldMessage.attachments) {
         oldMessage.attachments.array().forEach(attachment => {
-            logEmbed.addField("Attachment:", attachment.proxyURL, true)
+            log.addField("Attachment:", attachment.proxyURL, true)
             if (attachment.proxyURL.includes(".png") || attachment.proxyURL.includes(".jpg") || attachment.proxyURL.includes(".gif")) {
-                logEmbed.setImage(attachment.proxyURL);
+                log.setImage(attachment.proxyURL);
             }
         });
     }
 
     let loggingChannel = newMessage.guild.channels.cache.find(ch => ch.name === logchannel)
     if(!loggingChannel) return;
-    loggingChannel.send(logEmbed);
+    loggingChannel.send(log);
 })
 
-/*client.on("messageDeleteBulk", messages => {
-    const delmsgs = new Discord.MessageEmbed()
-    .setColor('#ff0000')
-    .setTitle('Messages deleted in '+messages[0].message.channel.name)
-    .setAuthor(message.author.username)
-    .setThumbnail(message.author.avatar)
-    .setDescription(message.content)
-    .setTimestamp()
+client.on("guildMemberAdd", member =>{
+    let log = new Discord.MessageEmbed()
+        .setAuthor(member.user.tag, member.user.displayAvatarURL({ "format": "png", "size": 1024 })) //gets the author's avatar url.
+        .setThumbnail(member.user.avatarURL)
+        .setColor("#ccccff")
+        .setDescription(`A new user has joined ${member.guild.name}! Their account was created at ${member.user.createdAt}`)
+        .setTimestamp()
+        .setFooter("User ID: " + member.user.id);
+    let loggingChannel = member.guild.channels.cache.find(ch => ch.name === logchannel)
+    if(!loggingChannel) return;
+    loggingChannel.send(log)
+})
 
-    message.guild.channels.cache.get(logchannel).send(delmsgs)
-})*/
-//todo: move into bulk delete instead of event handler;
-
+client.on("guildMemberRemove", member =>{
+    let log = new Discord.MessageEmbed()
+        .setAuthor(member.user.tag, member.user.displayAvatarURL({ "format": "png", "size": 1024 })) //gets the author's avatar url.
+        .setThumbnail(member.user.avatarURL)
+        .setColor("#ff0000")
+        .setDescription(`A user has left or been kicked from ${member.guild.name}.`)
+        .setTimestamp()
+        .setFooter("User ID: " + member.user.id);
+    let loggingChannel = member.guild.channels.cache.find(ch => ch.name === logchannel)
+    if(!loggingChannel) return;
+    loggingChannel.send(log)
+})
 
 client.on("messageReactionAdd", (reaction, user) => { // message reactions go brr ver c00l
     var guild = reaction.message.guild;
