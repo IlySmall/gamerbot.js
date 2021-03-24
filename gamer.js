@@ -257,6 +257,7 @@ client.on("guildMemberRemove", member =>{
 })
 
 client.on("guildMemberUpdate", (oldMember, newMember) =>{
+    let send = false
     let log = new Discord.MessageEmbed()
         .setAuthor(oldMember.user.tag, oldMember.user.displayAvatarURL({ "format": "png", "size": 1024 })) //gets the author's avatar url.
         .setThumbnail(oldMember.user.avatarURL)
@@ -265,10 +266,12 @@ client.on("guildMemberUpdate", (oldMember, newMember) =>{
         .setTimestamp()
         .setFooter("User ID: " + oldMember.user.id);
     if(oldMember.nickname!=newMember.nickname){
+        send=true
         log.addField("Old Nickname:",oldMember.nickname || "None",true)
         log.addField("New Nickname:",newMember.nickname || "None",true)
     }
     if(oldMember.roles.cache.array()!=newMember.roles.cache.array()){
+        send=true
         if(_.difference(newMember.roles.cache.array(),oldMember.roles.cache.array()).length>0){
             log.addField("Added roles: ",_.difference(newMember.roles.cache.array(),oldMember.roles.cache.array()))
         }
@@ -277,7 +280,7 @@ client.on("guildMemberUpdate", (oldMember, newMember) =>{
         }
     }
     let loggingChannel = oldMember.guild.channels.cache.find(ch => ch.name === logchannel)
-    if(!loggingChannel) return;
+    if(!loggingChannel || send == false) return;
     loggingChannel.send(log)
 })
 
