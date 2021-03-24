@@ -265,8 +265,8 @@ client.on("guildMemberUpdate", (oldMember, newMember) =>{
         .setTimestamp()
         .setFooter("User ID: " + oldMember.user.id);
     if(oldMember.nickname!=newMember.nickname){
-        log.addField("Old Nickname:",oldMember.nickname,true)
-        log.addField("New Nickname:",newMember.nickname,true)
+        log.addField("Old Nickname:",oldMember.nickname || "None",true)
+        log.addField("New Nickname:",newMember.nickname || "None",true)
     }
     if(oldMember.roles.cache.array()!=newMember.roles.cache.array()){
         if(_.difference(newMember.roles.cache.array(),oldMember.roles.cache.array()).length>0){
