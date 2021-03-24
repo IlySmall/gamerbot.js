@@ -1,4 +1,5 @@
 const Discord = require('discord.js'); // if you don't have this you can't commit discord
+var _ = require('underscore');
 var { prefix, token, globalCleanup, logchannel } = require('./cfg.json');
 setInterval(() => {
     var cfg = require('./cfg.json');
@@ -251,6 +252,31 @@ client.on("guildMemberRemove", member =>{
         .setTimestamp()
         .setFooter("User ID: " + member.user.id);
     let loggingChannel = member.guild.channels.cache.find(ch => ch.name === logchannel)
+    if(!loggingChannel) return;
+    loggingChannel.send(log)
+})
+
+client.on("guildMemberUpdate", (oldMember, newMember) =>{
+    let log = new Discord.MessageEmbed()
+        .setAuthor(oldMember.user.tag, oldMember.user.displayAvatarURL({ "format": "png", "size": 1024 })) //gets the author's avatar url.
+        .setThumbnail(oldMember.user.avatarURL)
+        .setColor("#ffd500")
+        .setDescription(`A user has been updated in ${oldMember.guild.name}.`)
+        .setTimestamp()
+        .setFooter("User ID: " + oldMember.user.id);
+    if(oldMember.nickname!=newMember.nickname){
+        log.addField("Old Nickname:",oldMember.nickname,true)
+        log.addField("New Nickname:",newMember.nickname,true)
+    }
+    if(oldMember.roles.cache.array()!=newMember.roles.cache.array()){
+        if(_.difference(newMember.roles.cache.array(),oldMember.roles.cache.array()).length>0){
+            log.addField("Added roles: ",_.difference(newMember.roles.cache.array(),oldMember.roles.cache.array()))
+        }
+        if(_.difference(oldMember.roles.cache.array(),newMember.roles.cache.array()).length>0){
+            log.addField("Removed roles: ",_.difference(oldMember.roles.cache.array(),newMember.roles.cache.array()))
+        }
+    }
+    let loggingChannel = oldMember.guild.channels.cache.find(ch => ch.name === logchannel)
     if(!loggingChannel) return;
     loggingChannel.send(log)
 })
