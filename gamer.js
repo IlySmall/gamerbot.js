@@ -257,7 +257,7 @@ client.on("guildMemberRemove", member =>{
 })
 
 client.on("guildMemberUpdate", (oldMember, newMember) =>{
-    let send = false
+    var send = false
     let log = new Discord.MessageEmbed()
         .setAuthor(oldMember.user.tag, oldMember.user.displayAvatarURL({ "format": "png", "size": 1024 })) //gets the author's avatar url.
         .setThumbnail(oldMember.user.avatarURL)
@@ -271,11 +271,13 @@ client.on("guildMemberUpdate", (oldMember, newMember) =>{
         log.addField("New Nickname:",newMember.nickname || "None",true)
     }
     if(oldMember.roles.cache.array()!=newMember.roles.cache.array()){
-        send=true
+        
         if(_.difference(newMember.roles.cache.array(),oldMember.roles.cache.array()).length>0){
+            send=true
             log.addField("Added roles: ",_.difference(newMember.roles.cache.array(),oldMember.roles.cache.array()))
         }
         if(_.difference(oldMember.roles.cache.array(),newMember.roles.cache.array()).length>0){
+            send=true
             log.addField("Removed roles: ",_.difference(oldMember.roles.cache.array(),newMember.roles.cache.array()))
         }
     }
