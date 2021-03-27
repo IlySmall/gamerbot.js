@@ -4,7 +4,7 @@ module.exports = {
     name: 'clear',
     description: 'clear messages including the string specified posted within the past two weeks, arglist: including, excluding, number of messages to delete',
     guildOnly: true,
-    //permissions: "admin global",
+    permissions: "admin global",
     aliases: ['cls', 'clr'],
     usage: " arg+string (if excluding/including)",
     execute(message, args, content, client) {
