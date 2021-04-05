@@ -171,7 +171,7 @@ client.on('message', message => {
     }
 
     try {
-        command.execute(message, args, content, client);
+        command.execute(message, args, content, client, distube);
     } catch (error) {
         console.error(error);
         message.reply('there was an error trying to execute that command!'); // the command didn't work basically.
@@ -314,4 +314,21 @@ client.on("messageReactionRemove", (reaction, user) => { // message reactions go
     }
 })
 
+//music bullshit here
+const DisTube = require('distube')
+const distube = new DisTube(client, { searchSongs: false });
+const status = (queue) => `Volume: \`${queue.volume}%\` | Filter: \`${queue.filter || "Off"}\` | Loop: \`${queue.repeatMode ? queue.repeatMode == 2 ? "All Queue" : "This Song" : "Off"}\` | Autoplay: \`${queue.autoplay ? "On" : "Off"}\``;
+distube
+    .on("playSong", (message, queue, song) => message.channel.send(
+        `Playing \`${song.name}\` - \`${song.formattedDuration}\`\nRequested by: <${song.user}>\n${status(queue)}`
+    ))
+    .on("addSong", (message, queue, song) => message.channel.send(
+        `Added ${song.name} - \`${song.formattedDuration}\` to the queue by <${song.user}>`
+    ))
+    .on("playList", (message, queue, playlist, song) => message.channel.send(
+        `Play \`${playlist.name}\` playlist (${playlist.songs.length} songs).\nRequested by: ${song.user}\nNow playing \`${song.name}\` - \`${song.formattedDuration}\`\n${status(queue)}`
+    ))
+    .on("addList", (message, queue, playlist) => message.channel.send(
+        `Added \`${playlist.name}\` playlist (${playlist.songs.length} songs) to queue\n${status(queue)}`
+    ))
 client.login(token); //todo: comment the code you dumb shit
