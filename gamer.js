@@ -211,8 +211,6 @@ client.on("messageUpdate", (oldMessage, newMessage) => { // This make the messag
         .setThumbnail(oldMessage.author.avatarURL)
         .setColor("#ffd500")
         .setDescription(`Message edited in <#${oldMessage.channel.id}> [Jump to message](${oldMessage.url} 'Jump to message')`)
-        .addField("**Before**", oldMessage.content || "Media.", true)
-        .addField("**After**", newMessage.content || "Empty", true)
         .setTimestamp()
         .setFooter("User ID: " + oldMessage.author.id);
     if (oldMessage.attachments) {
@@ -222,6 +220,10 @@ client.on("messageUpdate", (oldMessage, newMessage) => { // This make the messag
                 log.setImage(attachment.proxyURL);
             }
         });
+    if (oldMessage.content.length<1024) log.addField("**Before**", oldMessage.content || "Media.", true)
+    else log.addField("**Before**", "Too long to display.", true)
+    if (newMessage.content.length<1024) log.addField("**After**", newMessage.content || "Empty", true)
+    else log.addField("**After**", "Too long to display.", true)
     }
 
     let loggingChannel = newMessage.guild.channels.cache.find(ch => ch.name === logchannel)
