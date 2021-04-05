@@ -194,7 +194,7 @@ client.on("messageDelete", message => { // This make the message delete go brrrr
         });
     }
 
-    if (oldMessage.content.length<1024) log.addField("**Message content:**", message.content || "Media.", false)
+    if (message.content.length<1024) log.addField("**Message content:**", message.content || "Media.", false)
     else log.addField("**Message content:**", message.content.substring(0,1021)+"...", false)
 
     let loggingChannel = message.guild.channels.cache.find(ch => ch.name === logchannel)
