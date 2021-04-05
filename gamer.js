@@ -320,13 +320,13 @@ const distube = new DisTube(client, { searchSongs: false });
 const status = (queue) => `Volume: \`${queue.volume}%\` | Filter: \`${queue.filter || "Off"}\` | Loop: \`${queue.repeatMode ? queue.repeatMode == 2 ? "All Queue" : "This Song" : "Off"}\` | Autoplay: \`${queue.autoplay ? "On" : "Off"}\``;
 distube
     .on("playSong", (message, queue, song) => message.channel.send(
-        `Playing \`${song.name}\` - \`${song.formattedDuration}\`\nRequested by: <${song.user}>\n${status(queue)}`
+        `Playing \`${song.name}\` - \`${song.formattedDuration}\`\nRequested by: ${song.user.name}\n${status(queue)}`
     ))
     .on("addSong", (message, queue, song) => message.channel.send(
-        `Added ${song.name} - \`${song.formattedDuration}\` to the queue by <${song.user}>`
+        `Added ${song.name} - \`${song.formattedDuration}\` to the queue by ${song.user.name}`
     ))
     .on("playList", (message, queue, playlist, song) => message.channel.send(
-        `Play \`${playlist.name}\` playlist (${playlist.songs.length} songs).\nRequested by: ${song.user}\nNow playing \`${song.name}\` - \`${song.formattedDuration}\`\n${status(queue)}`
+        `Play \`${playlist.name}\` playlist (${playlist.songs.length} songs).\nRequested by: ${song.user.name}\nNow playing \`${song.name}\` - \`${song.formattedDuration}\`\n${status(queue)}`
     ))
     .on("addList", (message, queue, playlist) => message.channel.send(
         `Added \`${playlist.name}\` playlist (${playlist.songs.length} songs) to queue\n${status(queue)}`
