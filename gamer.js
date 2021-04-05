@@ -185,15 +185,17 @@ client.on("messageDelete", message => { // This make the message delete go brrrr
         .setAuthor(message.author.tag, message.author.displayAvatarURL({ "format": "png", "size": 1024 }))
         .setTimestamp()
         .setDescription(`Message deleted in <#${message.channel.id}> [Jump to channel](${message.url} 'Jump to channel')`)
-        .addField("Message content: ", message.content || "Media.", false)
     if (message.attachments) {
         message.attachments.array().forEach(attachment => {
-            log.addField("Attachment:", attachment.proxyURL, true)
+            log.addField("Attachment:",  `[Link](${attachment.proxyURL} 'Attachment link')`, true)
             if (attachment.proxyURL.includes(".png") || attachment.proxyURL.includes(".jpg") || attachment.proxyURL.includes(".gif")) {
                 log.setImage(attachment.proxyURL);
             }
         });
     }
+
+    if (oldMessage.content.length<1024) log.addField("**Message content:**", message.content || "Media.", false)
+    else log.addField("**Message content:**", message.content.substring(0,1021)+"...", false)
 
     let loggingChannel = message.guild.channels.cache.find(ch => ch.name === logchannel)
     if(!loggingChannel) return;
@@ -215,15 +217,15 @@ client.on("messageUpdate", (oldMessage, newMessage) => { // This make the messag
         .setFooter("User ID: " + oldMessage.author.id);
     if (oldMessage.attachments) {
         oldMessage.attachments.array().forEach(attachment => {
-            log.addField("Attachment:", attachment.proxyURL, true)
+            log.addField("Attachment:",  `[Link](${attachment.proxyURL} 'Attachment link')`, true)
             if (attachment.proxyURL.includes(".png") || attachment.proxyURL.includes(".jpg") || attachment.proxyURL.includes(".gif")) {
                 log.setImage(attachment.proxyURL);
             }
         });
     if (oldMessage.content.length<1024) log.addField("**Before**", oldMessage.content || "Media.", true)
-    else log.addField("**Before**", "Too long to display.", true)
+    else log.addField("**Before**", oldMessage.content.substring(0,1021)+"...", true)
     if (newMessage.content.length<1024) log.addField("**After**", newMessage.content || "Empty", true)
-    else log.addField("**After**", "Too long to display.", true)
+    else log.addField("**After**", newMessage.content.substring(0,1021)+"...", true)
     }
 
     let loggingChannel = newMessage.guild.channels.cache.find(ch => ch.name === logchannel)
