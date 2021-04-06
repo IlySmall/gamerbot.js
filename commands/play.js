@@ -4,6 +4,10 @@ module.exports = {
     usage:" ",
     guildOnly: true,
 	execute(message,args,b,c,distube) {
-        distube.play(message, args.join(" "));
+        try{distube.play(message, args.join(" "));}
+        catch(e){
+            console.log(e)
+            message.channel.send("You have to be in a voice channel or there is an error.")
+        }
 	},
 };
