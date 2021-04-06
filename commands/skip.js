@@ -4,5 +4,6 @@ module.exports = {
     usage:" ",
 	execute(message,args,b,c,distube) {
         distube.skip(message)
+        message.channel.send("Skipped current song.")
 	},
 };
