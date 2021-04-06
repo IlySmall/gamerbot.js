@@ -179,6 +179,9 @@ client.on('message', message => {
 });
 
 client.on("messageDelete", message => { // This make the message delete go brrrr.
+    if(message.guild==undefined){
+        return;
+    }
     let log = new Discord.MessageEmbed()
         .setTitle("Message deleted in NeKommunity (hopefully)")
         .setColor('#ff0000')
@@ -206,7 +209,9 @@ client.on("messageUpdate", (oldMessage, newMessage) => { // This make the messag
     if (oldMessage.content === newMessage.content) {
         return;
     }
-
+    if(oldMessage.guild==undefined){
+        return;
+    }
     let log = new Discord.MessageEmbed()
         .setTitle("Message edited in NeKommunity (hopefully)")
         .setAuthor(oldMessage.author.tag, oldMessage.author.displayAvatarURL({ "format": "png", "size": 1024 })) //gets the author's avatar url.
