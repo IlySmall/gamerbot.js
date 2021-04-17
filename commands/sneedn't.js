@@ -7,7 +7,7 @@ module.exports = {
     permissions: "admin global",
     execute(message, args, content) {
         if(args[0]=="list"){
-            var reply
+            var reply = "";
             fs.readFile('sneed.json', function (err, data) {
                 if (err) {
                     throw err;
