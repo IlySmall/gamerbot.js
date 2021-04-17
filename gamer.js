@@ -58,6 +58,28 @@ client.on('ready', () => { // Stuff that happens when the bot alives
 });
 
 client.on('message', message => {
+    //sneed vibe check
+    fs.readFile('sneed.json', function (err, data) {
+        if (err) {
+            throw err;
+        }
+        else{
+            d = JSON.parse(data)
+            for(var i=0;i<d.punishlist.length;i++){
+                if(d.punishlist[i].endtime<Math.floor(new Date().getTime() / 1000)){
+                    message.guild.members.cache.get(d.punishlist[i].userid).roles.remove(message.guild.roles.cache.get("805789609396142120"))
+                    d.punishlist.splice(i,1)
+                    fs.writeFile("sneed.json", JSON.stringify(d), (err) => {
+                        if (err) {
+                            throw err;
+                        }
+                    })
+                }
+            }
+        }
+    })
+    //end of sneed vibe check
+
     if (!message.content.startsWith(prefix)) { // The prefix if you can't read I apologise for you disability.
         client.user.setActivity({ name: `${statusmsg}` }) // sets status msg.
         return;
@@ -336,4 +358,5 @@ distube
     .on("addList", (message, queue, playlist) => message.channel.send(
         `Added \`${playlist.name}\` playlist (${playlist.songs.length} songs) to queue\n${status(queue)}`
     ))
+
 client.login(token); //todo: comment the code you dumb shit
