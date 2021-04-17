@@ -12,12 +12,15 @@ module.exports = {
                 if (err) {
                     throw err;
                 }
-                var json = JSON.parse(data)
-                for(x of json.punishlist){
-                    reply+=" <@"+x.userid+">";
+                else{
+                    var json = JSON.parse(data)
+                    for(x of json.punishlist){
+                        reply+=" <@"+x.userid+">";
+                    }
+                    message.channel.send(reply||"None.",{"allowedMentions": { "users" : []}})
                 }
             })
-            return message.channel.send(reply||"None.",{"allowedMentions": { "users" : []}})
+            return;
         }
         else if (!message.mentions.users.size == 1) {
                 return message.channel.send(`Smite one person please, dumbass?`);
