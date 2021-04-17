@@ -6,7 +6,20 @@ module.exports = {
     guildOnly: true,
     permissions: "admin global",
     execute(message, args, content) {
-        if (!message.mentions.users.size == 1) {
+        if(args[0]=="list"){
+            var reply
+            fs.readFile('sneed.json', function (err, data) {
+                if (err) {
+                    throw err;
+                }
+                var json = JSON.parse(data)
+                for(x of json.punishlist){
+                    reply+=" <@"+x.userid+">";
+                }
+            })
+            return message.channel.send(reply,{"allowedMentions": { "users" : []}})
+        }
+        else if (!message.mentions.users.size == 1) {
                 return message.channel.send(`Smite one person please, dumbass?`);
             }
             const sneedRole = message.guild.roles.cache.get("805789609396142120")
