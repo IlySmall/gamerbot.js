@@ -17,7 +17,7 @@ module.exports = {
                     reply+=" <@"+x.userid+">";
                 }
             })
-            return message.channel.send(reply,{"allowedMentions": { "users" : []}})
+            return message.channel.send(reply||"None.",{"allowedMentions": { "users" : []}})
         }
         else if (!message.mentions.users.size == 1) {
                 return message.channel.send(`Smite one person please, dumbass?`);
