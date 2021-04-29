@@ -6,6 +6,6 @@ module.exports = {
     guildOnly: true,
 	execute(message,args,b,c,distube) {
         let mode = distube.setRepeatMode(message, parseInt(args[0]));
-        message.channel.send("Set loop mode to`" + (mode == 0 ? "None" : mode==1 ? "This song" : "Queue") + "`")
+        message.channel.send("Set loop mode to `" + (mode == 0 ? "None" : mode==1 ? "This song" : "Queue") + "`")
 	},
 };
