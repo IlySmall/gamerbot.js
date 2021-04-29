@@ -220,7 +220,7 @@ client.on("messageDelete", message => { // This make the message delete go brrrr
     }
 
     if (message.content.length<1024) log.addField("**Message content:**", message.content || "Media.", false)
-    else log.addField("**Message content:**", message.content.substring(0,768)+"...", false)
+    else log.addField("**Message content:**", message.content.substring(0,768).trim()+"...", false)
 
     let loggingChannel = message.guild.channels.cache.find(ch => ch.name === logchannel)
     if(!loggingChannel) return;
@@ -250,9 +250,9 @@ client.on("messageUpdate", (oldMessage, newMessage) => { // This make the messag
             }
         });
     if (oldMessage.content.length<1024) log.addField("**Before**", oldMessage.content || "Media.", true)
-    else log.addField("**Before**", oldMessage.content.substring(0,768)+"...", true)
+    else log.addField("**Before**", oldMessage.content.substring(0,768).trim()+"...", true)
     if (newMessage.content.length<1024) log.addField("**After**", newMessage.content || "Empty", true)
-    else log.addField("**After**", newMessage.content.substring(0,768)+"...", true)
+    else log.addField("**After**", newMessage.content.substring(0,768).trim()+"...", true)
     }
 
     let loggingChannel = newMessage.guild.channels.cache.find(ch => ch.name === logchannel)
