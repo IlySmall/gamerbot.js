@@ -15,14 +15,30 @@ module.exports = {
                 else{
                     var json = JSON.parse(data)
                     for(x of json.punishlist){
-                        reply+=" <@"+x.userid+">";
+                        reply+="<@"+x.userid+"> Reason: `"+x.reason+"`\n";
                     }
                     message.channel.send(reply||"None.",{"allowedMentions": { "users" : []}})
                 }
             })
             return;
         }
-        else if (!message.mentions.users.size == 1) {
+        if(args[0]=="history"){
+            var reply = "";
+            fs.readFile('sneed.json', function (err, data) {
+                if (err) {
+                    throw err;
+                }
+                else{
+                    var json = JSON.parse(data)
+                    for(x of json.sneedhistory){
+                        reply+="<@"+x.userid+"> Reason: `"+x.reason+"`\n";
+                    }
+                    message.channel.send(reply||"None.",{"allowedMentions": { "users" : []}})
+                }
+            })
+            return;
+        }
+        else if (!message.mentions.users.size == 1 && args[0].length!=18) {
                 return message.channel.send(`Smite one person please, dumbass?`);
             }
             const sneedRole = message.guild.roles.cache.get("805789609396142120")
@@ -54,11 +70,21 @@ module.exports = {
                         message.reply("pick a valid time.")
                         return;
                     }
-                    message.guild.members.cache.get(message.mentions.users.array()[0].id).roles.add(sneedRole)
-                    var sneed = {
-                        userid: message.mentions.users.array()[0].id,
-                        endtime: et,
-                        reason: content.substr(2, content.length)
+                    if(message.mentions.users.size == 1){
+                        message.guild.members.cache.get(message.mentions.users.array()[0].id).roles.add(sneedRole)
+                        var sneed = {
+                            userid: message.mentions.users.array()[0].id,
+                            endtime: et,
+                            reason: content.substr(2, content.length)
+                        }
+                    }
+                    else{
+                        message.guild.members.cache.get(args[0]).roles.add(sneedRole)
+                        var sneed = {
+                            userid: args[0],
+                            endtime: et,
+                            reason: content.substr(2, content.length)
+                        }
                     }
                     var json = JSON.parse(data)
                     var rep = undefined;
