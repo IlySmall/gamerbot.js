@@ -11,7 +11,7 @@ module.exports = {
 
 		if (!args.length) {
 			data.push('all the current commands you dumb shit:');
-			data.push(commands.map(command => command.name).join(', '));
+			data.push(commands.map(command =>"***"+ command.name + "***: "+command.description).join('\n '));
 			data.push(`\nYou can send \`${prefix}help [command name]\` if you're retarded and need more help!`);
 
 			return message.author.send(data, { split: true })

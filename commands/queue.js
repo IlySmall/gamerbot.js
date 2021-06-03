@@ -2,6 +2,7 @@ module.exports = {
 	name: 'queue',
     description: 'music',
     usage:" ",
+    aliases: ['q'],
     guildOnly: true,
 	execute(message,args,b,c,distube) {
         try {

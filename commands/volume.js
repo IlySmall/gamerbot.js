@@ -2,6 +2,7 @@
 	name: 'volume',
     description: 'music',
     usage:" ",
+    aliases: ['v', 'vol'],
 	execute(message,args,b,c,distube) {
         if(parseFloat(args[0])<=100&&parseFloat(args[0])>0){
             distube.setVolume(message, args[0])

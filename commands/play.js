@@ -2,6 +2,7 @@ module.exports = {
 	name: 'play',
     description: 'music',
     usage:" ",
+    aliases: ['p'],
     guildOnly: true,
 	execute(message,args,b,c,distube) {
         try{distube.play(message, args.join(" "));}
