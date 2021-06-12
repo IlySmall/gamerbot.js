@@ -28,7 +28,7 @@ module.exports = {
 		const name = args[0].toLowerCase();
 		const command = commands.get(name) || commands.find(c => c.aliases && c.aliases.includes(name));
 
-		if (name === "nigger" || name === "nigga" || name === "нигга" || name === "ниггер" || name === "にっが" || name === "ニッガ" || name === "ﾆｯｶﾞ") {
+		if (name === "nigger" || name === "nigga" || name === "нигга" || name === "ниггер" || name === "にっが" || name === "ニッガ" || name === "ﾆｯｶﾞ" || name === "黑鬼") {
 			return message.reply('I\'m not black you dumb shit!');
 		}
 		if (!command) {
