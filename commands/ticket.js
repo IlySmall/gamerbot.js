@@ -6,7 +6,8 @@ module.exports = {
 	execute(message,args,content) {
         var isArgsContent=args[0]==content
         var topic = (isArgsContent ? args[0]:args[0]+content)
-        message.channel.guild.channels.create(`${message.author.tag}_${Date.now()}`, {
+        var ticketname=message.author.tag+"_"+Date.now()
+        message.channel.guild.channels.create(`${ticketname}`, {
             type: 'text',
             parent: '852629180009152533',
             topic: topic,
@@ -31,5 +32,6 @@ module.exports = {
             ],
           })
         message.channel.send("Ticket created.")
+        message.guild.channels.cache.find(channel=>channel.name==ticketname).send(`${message.author.toString()}, the ticket is **here**.`)
 	},
 };
