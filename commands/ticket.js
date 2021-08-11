@@ -32,6 +32,6 @@ module.exports = {
             ],
           })
         message.channel.send("Ticket created.")
-        message.guild.channels.cache.find(channel=>channel.name==ticketname).send(`${message.author.toString()}, the ticket is **here**.`)
+        message.channel.guild.channels.cache.find(channel=>channel.name===ticketname).send(`${message.author.toString()}, the ticket is **here**.`)
 	},
 };

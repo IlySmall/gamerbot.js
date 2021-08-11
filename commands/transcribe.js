@@ -2,7 +2,7 @@ async function ToFile(channel,data){
     const fs = require('fs');
     data=data.reverse().join("\n----------------------------------------------------------------------------------\n")
     await fs.writeFile("transcript.txt", data, (error)=>{if(error){console.error; channel.send("An error has occured.")} else channel.send("Transcript created successfully.")})
-    channel.guild.channels.cache.find(channel=>channel.name ==="transcripts").send("Transcript of "+channel.name, {files:[
+    channel.guild.channels.cache.find(channel=>channel.name==="transcripts").send("Transcript of "+channel.name, {files:[
         "transcript.txt"
     ]})
 }
