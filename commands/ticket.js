@@ -1,7 +1,7 @@
 module.exports = {
 	name: 'ticket',
-    description: 'wip',
-    usage:" ",
+    description: 'File a ticket with the staff!',
+    usage:" (insert a short-ish reason for ticket)",
     guildOnly: true,
 	execute(message,args,content) {
         var isArgsContent=args[0]==content

@@ -107,3 +107,5 @@ dist
 .tern-port
 cfg.json
 ideadb.json
+transcript.txt
+reminddb.json
