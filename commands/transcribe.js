@@ -27,7 +27,7 @@ module.exports = {
                                     const url = attachment.url;
                                     attachments.push(url)
                                   });
-                                data.push(msg.content+"\n"+attachments.toString()+"\n"+msg.createdAt)
+                                data.push(msg.author.tag+"\n"+msg.content+"\n"+attachments.toString()+"\n"+msg.createdAt)
                             if (i == 100) {
                                 var lastId = msg.id
                                 fetch(lastId)
