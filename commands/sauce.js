@@ -11,9 +11,10 @@ module.exports = {
     async execute(message) {
         const messages = await message.channel.messages.fetch({ limit: 2 });
         const lastMessage = messages.last();
-        if(!lastMessage.attachments.last()) return message.reply("there is no image in the last message.")
-        var pic = lastMessage.attachments.last().url;
-        if (!pic.includes(".png" || ".jpg" || ".jpglarge" || ".pnglarge" || ".gif"||"format=png"||"format=jpg"||".jpeg"||"format=gif")) return message.reply("there is no image in the last message.")
+        if(!lastMessage.attachments.last()&&!lastMessage.embeds[0]) return message.reply("there is no image in the last message.")
+        if(lastMessage.embeds[0].type!="image") return message.reply("there is no image in the last message.")
+        var pic = (lastMessage.attachments.last()?lastMessage.attachments.last().url:lastMessage.embeds[0].url);
+        if (!pic.includes(".png") && !pic.includes(".jpg") && !pic.includes(".jpglarge") && !pic.includes(".pnglarge") && !pic.includes(".gif") && !pic.includes("pbs.twimg.com") && !pic.includes(".jpeg")) return message.reply("there is no image in the last message?")
         var res = await sauce(pic)
         var result = res[0]
         if(!result.similarity) return message.reply("Sauce not found at all or API limit exceeded.")
@@ -30,12 +31,12 @@ module.exports = {
             .setThumbnail(result.thumbnail)
             .addFields(
                 { name: 'URLs:', value: (urls?urls:"None.") },
-                { name: (result.source.includes("http")?"\u200b":"Source:"), value: (result.source.includes("http")?`[Source](${result.source} 'Source of the image.')`:result.source) },
                 { name: 'Similarity:', value: result.similarity, inline: true },
             )
             .setImage(pic)
             .setTimestamp()
             .setFooter('Please donate at https://paypal.me/nowabi if you like the bot');
+            if(result.source) embed.addField((result.source.includes("http")?"\u200b":"Source:"), (result.source.includes("http")?`[Source](${result.source} 'Source of the image.')`:result.source))
             if(result.type) embed.addField("Type:",result.type,true)
             if(result.material) embed.addField("Source material:",result.material,true)
             if(result.creator) embed.addField("Artist:",result.creator,true)
