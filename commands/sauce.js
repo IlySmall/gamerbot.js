@@ -16,7 +16,7 @@ module.exports = {
         var pic = (lastMessage.attachments.last()?lastMessage.attachments.last().url:lastMessage.embeds[0].url);
         if (!pic.includes(".png") && !pic.includes(".jpg") && !pic.includes(".jpglarge") && !pic.includes(".pnglarge") && !pic.includes(".gif") && !pic.includes("pbs.twimg.com") && !pic.includes(".jpeg")) return message.reply("there is no image in the last message?")
         try{var res = await sauce(pic)}
-        catch(e){console.error(e)}
+        catch(e){console.error(e); message.reply("There has been an error:`"+e+"`")}
         var result = res[0]
         if(!result.similarity) return message.reply("Sauce not found at all or API limit exceeded.")
         if(result.similarity<50.0) return message.reply("Sauce similarity below 50%, thrown away.")
