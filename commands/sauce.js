@@ -13,7 +13,7 @@ module.exports = {
         const lastMessage = messages.last();
         if(!lastMessage.attachments.last()) return message.reply("there is no image in the last message.")
         var pic = lastMessage.attachments.last().url;
-        if (!pic.includes(".png" || ".jpg" || ".jpglarge" || ".pnglarge" || ".gif")) return message.reply("there is no image in the last message.")
+        if (!pic.includes(".png" || ".jpg" || ".jpglarge" || ".pnglarge" || ".gif"||"format=png"||"format=jpg"||".jpeg"||"format=gif")) return message.reply("there is no image in the last message.")
         var res = await sauce(pic)
         var result = res[0]
         if(!result.similarity) return message.reply("Sauce not found at all or API limit exceeded.")
