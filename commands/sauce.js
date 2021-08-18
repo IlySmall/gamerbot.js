@@ -2,7 +2,6 @@ const Sauce = require('node-sauce')
 const { MessageEmbed } = require('discord.js');
 let sauce = new Sauce("b520754ef9e9082676caa54ec756dad14dbc4d44")
 sauce.numres = 1
-sauce.minsimilarity = 50.0
 module.exports = {
     name: 'sauce',
     description: 'Posts sauce. LIMITED TO 200 USES PER DAY.',
@@ -18,6 +17,7 @@ module.exports = {
         var res = await sauce(pic)
         var result = res[0]
         if(!result.similarity) return message.reply("Sauce not found at all or API limit exceeded.")
+        if(result.similarity<50.0) return message.reply("Sauce similarity below 50%, thrown away.")
         var urls=""
         if(result.ext_urls){
             result.ext_urls.forEach((e,i) => {
