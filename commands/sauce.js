@@ -1,6 +1,7 @@
 const Sauce = require('node-sauce')
 const { MessageEmbed } = require('discord.js');
 let sauce = new Sauce("b520754ef9e9082676caa54ec756dad14dbc4d44")
+sauce.dbmask = [3,4,5,6,7,8,9,10,11,12,13,14,19,20,21,23,24,25,26,27,28,33,34,35,36,37,39,41]
 sauce.numres = 1
 module.exports = {
     name: 'sauce',
