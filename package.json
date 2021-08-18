@@ -6,6 +6,7 @@
     "ffmpeg-static": "^4.3.0",
     "fs": "^0.0.1-security",
     "node": "^15.8.0",
+    "node-sauce": "^1.0.5",
     "opusscript": "^0.0.8",
     "underscore": "^1.12.0"
   }
