@@ -11,10 +11,11 @@ module.exports = {
         const messages = await message.channel.messages.fetch({ limit: 2 });
         const lastMessage = messages.last();
         if(!lastMessage.attachments.last()&&!lastMessage.embeds[0]) return message.reply("there is no image in the last message.")
-        if(lastMessage.embeds[0].type!="image") return message.reply("there is no image in the last message.")
+        if(lastMessage.embeds[0]){if(lastMessage.embeds[0].type!="image") return message.reply("there is no image in the last message.")}
         var pic = (lastMessage.attachments.last()?lastMessage.attachments.last().url:lastMessage.embeds[0].url);
         if (!pic.includes(".png") && !pic.includes(".jpg") && !pic.includes(".jpglarge") && !pic.includes(".pnglarge") && !pic.includes(".gif") && !pic.includes("pbs.twimg.com") && !pic.includes(".jpeg")) return message.reply("there is no image in the last message?")
-        var res = await sauce(pic)
+        try{var res = await sauce(pic)}
+        catch(e){console.error(e)}
         var result = res[0]
         if(!result.similarity) return message.reply("Sauce not found at all or API limit exceeded.")
         if(result.similarity<50.0) return message.reply("Sauce similarity below 50%, thrown away.")
