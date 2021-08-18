@@ -16,7 +16,7 @@ module.exports = {
         if (!pic.includes(".png" || ".jpg" || ".jpglarge" || ".pnglarge" || ".gif")) return message.reply("there is no image in the last message.")
         var res = await sauce(pic)
         var result = res[0]
-        console.log(result)
+        if(!result.similarity) return message.reply("Sauce not found at all or API limit exceeded.")
         var urls=""
         if(result.ext_urls){
             result.ext_urls.forEach((e,i) => {
