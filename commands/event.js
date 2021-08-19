@@ -11,10 +11,11 @@ module.exports = {
             .setTitle('New event!')
             .setAuthor(message.author.tag, message.author.avatarURL)
             .setThumbnail(message.author.avatarURL)
-            .setDescription("<@&875033404071084112>: "+content)
+            .setDescription("Description: "+content)
             .addField('Time:',`<t:${args[0]}:F>`,true)
             .setTimestamp()
             .setFooter('Please donate at https://paypal.me/nowabi if you like the bot');
         client.guilds.cache.get("716993263889809510").channels.cache.get("877947724392169503").send(embed)
+        client.guilds.cache.get("716993263889809510").channels.cache.get("877947724392169503").send("<@&875033404071084112>")
 	},
 };
