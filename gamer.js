@@ -63,13 +63,15 @@ client.on('message', message => {
         if (err) {
             throw err;
         }
-        else{
+        else {
             d = JSON.parse(data)
-            for(var i=0;i<d.punishlist.length;i++){
-                if(d.punishlist[i].endtime<Math.floor(new Date().getTime() / 1000)){
-                    try{message.guild.members.cache.get(d.punishlist[i].userid).roles.remove(message.guild.roles.cache.get("805789609396142120"))
-                    d.sneedhistory.push(d.punishlist.splice(i,1)[0]);}
-                    catch(e){console.error(e)}
+            for (var i = 0; i < d.punishlist.length; i++) {
+                if (d.punishlist[i].endtime < Math.floor(new Date().getTime() / 1000)) {
+                    try {
+                        message.guild.members.cache.get(d.punishlist[i].userid).roles.remove(message.guild.roles.cache.get("805789609396142120"))
+                        d.sneedhistory.push(d.punishlist.splice(i, 1)[0]);
+                    }
+                    catch (e) { console.error(e) }
                     fs.writeFile("sneed.json", JSON.stringify(d), (err) => {
                         if (err) {
                             throw err;
@@ -202,7 +204,7 @@ client.on('message', message => {
 });
 
 client.on("messageDelete", message => { // This make the message delete go brrrr.
-    if(message.guild==undefined){
+    if (message.guild == undefined) {
         return;
     }
     let log = new Discord.MessageEmbed()
@@ -213,18 +215,18 @@ client.on("messageDelete", message => { // This make the message delete go brrrr
         .setDescription(`Message deleted in <#${message.channel.id}> [Jump to channel](${message.url} 'Jump to channel')`)
     if (message.attachments) {
         message.attachments.array().forEach(attachment => {
-            log.addField("Attachment:",  `[Link](${attachment.proxyURL} 'Attachment link')`, true)
+            log.addField("Attachment:", `[Link](${attachment.proxyURL} 'Attachment link')`, true)
             if (attachment.proxyURL.includes(".png") || attachment.proxyURL.includes(".jpg") || attachment.proxyURL.includes(".gif")) {
                 log.setImage(attachment.proxyURL);
             }
         });
     }
 
-    if (message.content.length<1024) log.addField("**Message content:**", message.content || "Media.", false)
-    else log.addField("**Message content:**", message.content.substring(0,768).trim()+"...", false)
+    if (message.content.length < 1024) log.addField("**Message content:**", message.content || "Media.", false)
+    else log.addField("**Message content:**", message.content.substring(0, 768).trim() + "...", false)
 
     let loggingChannel = message.guild.channels.cache.find(ch => ch.name === logchannel)
-    if(!loggingChannel) return;
+    if (!loggingChannel) return;
     loggingChannel.send(log);
 });
 
@@ -232,7 +234,7 @@ client.on("messageUpdate", (oldMessage, newMessage) => { // This make the messag
     if (oldMessage.content === newMessage.content) {
         return;
     }
-    if(oldMessage.guild==undefined){
+    if (oldMessage.guild == undefined) {
         return;
     }
     let log = new Discord.MessageEmbed()
@@ -245,23 +247,23 @@ client.on("messageUpdate", (oldMessage, newMessage) => { // This make the messag
         .setFooter("User ID: " + oldMessage.author.id);
     if (oldMessage.attachments) {
         oldMessage.attachments.array().forEach(attachment => {
-            log.addField("Attachment:",  `[Link](${attachment.proxyURL} 'Attachment link')`, true)
+            log.addField("Attachment:", `[Link](${attachment.proxyURL} 'Attachment link')`, true)
             if (attachment.proxyURL.includes(".png") || attachment.proxyURL.includes(".jpg") || attachment.proxyURL.includes(".gif")) {
                 log.setImage(attachment.proxyURL);
             }
         });
-    if (oldMessage.content.length<1024) log.addField("**Before**", oldMessage.content || "Media.", true)
-    else log.addField("**Before**", oldMessage.content.substring(0,768).trim()+"...", true)
-    if (newMessage.content.length<1024) log.addField("**After**", newMessage.content || "Empty", true)
-    else log.addField("**After**", newMessage.content.substring(0,768).trim()+"...", true)
+        if (oldMessage.content.length < 1024) log.addField("**Before**", oldMessage.content || "Media.", true)
+        else log.addField("**Before**", oldMessage.content.substring(0, 768).trim() + "...", true)
+        if (newMessage.content.length < 1024) log.addField("**After**", newMessage.content || "Empty", true)
+        else log.addField("**After**", newMessage.content.substring(0, 768).trim() + "...", true)
     }
 
     let loggingChannel = newMessage.guild.channels.cache.find(ch => ch.name === logchannel)
-    if(!loggingChannel) return;
+    if (!loggingChannel) return;
     loggingChannel.send(log);
 })
 
-client.on("guildMemberAdd", member =>{
+client.on("guildMemberAdd", member => {
     let log = new Discord.MessageEmbed()
         .setAuthor(member.user.tag, member.user.displayAvatarURL({ "format": "png", "size": 1024 })) //gets the author's avatar url.
         .setThumbnail(member.user.avatarURL)
@@ -271,11 +273,11 @@ client.on("guildMemberAdd", member =>{
         .setFooter("User ID: " + member.user.id);
 
     let loggingChannel = member.guild.channels.cache.find(ch => ch.name === logchannel)
-    if(!loggingChannel) return;
+    if (!loggingChannel) return;
     loggingChannel.send(log);
 })
 
-client.on("guildMemberRemove", member =>{
+client.on("guildMemberRemove", member => {
     let log = new Discord.MessageEmbed()
         .setAuthor(member.user.tag, member.user.displayAvatarURL({ "format": "png", "size": 1024 })) //gets the author's avatar url.
         .setThumbnail(member.user.avatarURL)
@@ -284,11 +286,11 @@ client.on("guildMemberRemove", member =>{
         .setTimestamp()
         .setFooter("User ID: " + member.user.id);
     let loggingChannel = member.guild.channels.cache.find(ch => ch.name === logchannel)
-    if(!loggingChannel) return;
+    if (!loggingChannel) return;
     loggingChannel.send(log)
 })
 
-client.on("guildMemberUpdate", (oldMember, newMember) =>{
+client.on("guildMemberUpdate", (oldMember, newMember) => {
     var send = false
     let log = new Discord.MessageEmbed()
         .setAuthor(oldMember.user.tag, oldMember.user.displayAvatarURL({ "format": "png", "size": 1024 })) //gets the author's avatar url.
@@ -297,24 +299,24 @@ client.on("guildMemberUpdate", (oldMember, newMember) =>{
         .setDescription(`A user has been updated in ${oldMember.guild.name}.`)
         .setTimestamp()
         .setFooter("User ID: " + oldMember.user.id);
-    if(oldMember.nickname!=newMember.nickname){
-        send=true
-        log.addField("Old Nickname:",oldMember.nickname || "None",true)
-        log.addField("New Nickname:",newMember.nickname || "None",true)
+    if (oldMember.nickname != newMember.nickname) {
+        send = true
+        log.addField("Old Nickname:", oldMember.nickname || "None", true)
+        log.addField("New Nickname:", newMember.nickname || "None", true)
     }
-    if(oldMember.roles.cache.array()!=newMember.roles.cache.array()){
-        
-        if(_.difference(newMember.roles.cache.array(),oldMember.roles.cache.array()).length>0){
-            send=true
-            log.addField("Added roles: ",_.difference(newMember.roles.cache.array(),oldMember.roles.cache.array()))
+    if (oldMember.roles.cache.array() != newMember.roles.cache.array()) {
+
+        if (_.difference(newMember.roles.cache.array(), oldMember.roles.cache.array()).length > 0) {
+            send = true
+            log.addField("Added roles: ", _.difference(newMember.roles.cache.array(), oldMember.roles.cache.array()))
         }
-        if(_.difference(oldMember.roles.cache.array(),newMember.roles.cache.array()).length>0){
-            send=true
-            log.addField("Removed roles: ",_.difference(oldMember.roles.cache.array(),newMember.roles.cache.array()))
+        if (_.difference(oldMember.roles.cache.array(), newMember.roles.cache.array()).length > 0) {
+            send = true
+            log.addField("Removed roles: ", _.difference(oldMember.roles.cache.array(), newMember.roles.cache.array()))
         }
     }
     let loggingChannel = oldMember.guild.channels.cache.find(ch => ch.name === logchannel)
-    if(!loggingChannel || send == false) return;
+    if (!loggingChannel || send == false) return;
     loggingChannel.send(log)
 })
 
@@ -347,19 +349,18 @@ const DisTube = require('distube')
 const distube = new DisTube.default(client, { searchSongs: 0 });
 const status = (queue) => `Volume: \`${queue.volume}%\` | Filter: \`${queue.filter || "Off"}\` | Loop: \`${queue.repeatMode ? queue.repeatMode == 2 ? "All Queue" : "This Song" : "Off"}\` | Autoplay: \`${queue.autoplay ? "On" : "Off"}\``;
 distube
-    .on("playSong", (queue, song) => queue.textChannel.send(
-        `Playing \`${song.name}\` - \`${song.formattedDuration}\`\nRequested by: ${song.user.username}\n${status(queue)}`
-    ))
+    .on("playSong", (queue, song) => {
+        let msg = `Playing \`${song.name}\` - \`${song.formattedDuration}\``
+        if (song.playlist) msg = `Playlist: ${song.playlist.name}\n${msg}`
+        queue.textChannel.send(msg)
+    })
     .on("addSong", (queue, song) => queue.textChannel.send(
         `Added ${song.name} - \`${song.formattedDuration}\` to the queue by ${song.user.username}`
     ))
     .on("playList", (queue, playlist, song) => queue.textChannel.send(
         `Play \`${playlist.name}\` playlist (${playlist.songs.length} songs).\nRequested by: ${song.user.username}\nNow playing \`${song.name}\` - \`${song.formattedDuration}\`\n${status(queue)}`
     ))
-    .on("addList", (queue, playlist) => queue.textChannel.send(
-        `Added \`${playlist.name}\` playlist (${playlist.songs.length} songs) to queue\n${status(queue)}`
-    ))
-    .on("error", (channel, error)=>{
-        channel.send("fucky wucky error oh no: "+error)
+    .on("error", (channel, error) => {
+        channel.send("fucky wucky error oh no: " + error)
     })
 client.login(token); //todo: comment the code you dumb shit

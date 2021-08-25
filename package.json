@@ -1,19 +1,11 @@
 {
   "dependencies": {
     "@discordjs/opus": "^0.5.0",
-<<<<<<< Updated upstream
-    "discord.js": "^12.5.3",
-    "distube": "^3.0.0-beta.36",
-    "ffmpeg-static": "^4.3.0",
-    "fs": "^0.0.1-security",
-    "make": "^0.0.0",
-=======
     "discord.js": "^13.1.0",
     "distube": "^3.0.0-beta.36",
     "ffmpeg-static": "^4.3.0",
     "fs": "^0.0.1-security",
     "libsodium-wrappers": "^0.7.9",
->>>>>>> Stashed changes
     "node": "^15.8.0",
     "node-sauce": "^1.0.5",
     "opusscript": "^0.0.8",
