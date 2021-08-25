@@ -344,20 +344,22 @@ client.on("messageReactionRemove", (reaction, user) => { // message reactions go
 
 //music bullshit here
 const DisTube = require('distube')
-const distube = new DisTube.default(client, { searchSongs: false });
+const distube = new DisTube.default(client, { searchSongs: 0 });
 const status = (queue) => `Volume: \`${queue.volume}%\` | Filter: \`${queue.filter || "Off"}\` | Loop: \`${queue.repeatMode ? queue.repeatMode == 2 ? "All Queue" : "This Song" : "Off"}\` | Autoplay: \`${queue.autoplay ? "On" : "Off"}\``;
 distube
-    .on("playSong", (message, queue, song) => message.channel.send(
+    .on("playSong", (queue, song) => queue.textChannel.send(
         `Playing \`${song.name}\` - \`${song.formattedDuration}\`\nRequested by: ${song.user.username}\n${status(queue)}`
     ))
-    .on("addSong", (message, queue, song) => message.channel.send(
+    .on("addSong", (queue, song) => queue.textChannel.send(
         `Added ${song.name} - \`${song.formattedDuration}\` to the queue by ${song.user.username}`
     ))
-    .on("playList", (message, queue, playlist, song) => message.channel.send(
+    .on("playList", (queue, playlist, song) => queue.textChannel.send(
         `Play \`${playlist.name}\` playlist (${playlist.songs.length} songs).\nRequested by: ${song.user.username}\nNow playing \`${song.name}\` - \`${song.formattedDuration}\`\n${status(queue)}`
     ))
-    .on("addList", (message, queue, playlist) => message.channel.send(
+    .on("addList", (queue, playlist) => queue.textChannel.send(
         `Added \`${playlist.name}\` playlist (${playlist.songs.length} songs) to queue\n${status(queue)}`
     ))
-
+    .on("error", (channel, error)=>{
+        channel.send("fucky wucky error oh no: "+error)
+    })
 client.login(token); //todo: comment the code you dumb shit
