@@ -11,7 +11,7 @@ setInterval(() => {
     globalCleanup = cfg.globalCleanup;
 }, 500);
 const fs = require('fs'); // for checking filesystem.
-const client = new Discord.Client({intents:[Discord.Intents.FLAGS.GUILDS, Discord.Intents.FLAGS.GUILD_MEMBERS, Discord.Intents.FLAGS.GUILD_VOICE_STATES, Discord.Intents.FLAGS.GUILD_PRESENCES, Discord.Intents.FLAGS.GUILD_MESSAGE_TYPING, Discord.Intents.FLAGS.DIRECT_MESSAGES]}); // read please
+const client = new Discord.Client({intents:[Discord.Intents.FLAGS.GUILDS, Discord.Intents.FLAGS.GUILD_MEMBERS, Discord.Intents.FLAGS.GUILD_VOICE_STATES, Discord.Intents.FLAGS.GUILD_PRESENCES, Discord.Intents.FLAGS.GUILD_MESSAGE_TYPING, Discord.Intents.FLAGS.GUILD_MESSAGES, Discord.Intents.FLAGS.GUILD_MESSAGE_REACTIONS, Discord.Intents.FLAGS.DIRECT_MESSAGES]}); // read please
 let rolecid = "740408169712320592"
 let rolemid = "816023313495228446"
 let clientId = "772792940158255124"
@@ -28,7 +28,7 @@ for (const file of commandFiles) { // does node magic on the files
     client.commands.set(command.name, command); // command it exist
 }
 
-const rest = new REST({ version: '9' }).setToken(token); //slash command REST cancer
+/*const rest = new REST({ version: '9' }).setToken(token); //slash command REST cancer
 
 (async () => {
 	try {
@@ -43,7 +43,7 @@ const rest = new REST({ version: '9' }).setToken(token); //slash command REST ca
 	} catch (error) {
 		console.error(error);
 	}
-})();
+})();*/
 
 client.on('ready', () => { // Stuff that happens when the bot alives
 
@@ -79,7 +79,6 @@ client.on('ready', () => { // Stuff that happens when the bot alives
 
 client.on('messageCreate', message => {
     //sneed vibe check
-    console.log(message)
     fs.readFile('sneed.json', function (err, data) {
         if (err) {
             throw err;
@@ -155,13 +154,11 @@ client.on('messageCreate', message => {
     if (message.channel.type != "DM") { //thank you and fuck you MLG
         if (globalCleanup > 0) {
             setTimeout(() => message.delete(),globalCleanup)
-                .then(msg => console.log(`Deleted message from ${msg.author.username}, cleanup worky gud`))
-                .catch(console.error);
         }
 
         switch (command.permissions) { // Don't touch this you fucking fool.
             case "admin noargs": {
-                if (!message.guild.members.cache.get(message.author.id).hasPermission('ADMINISTRATOR') && args.length == 0) {
+                if (!message.guild.members.cache.get(message.author.id).permissions.has(Discord.Permissions.FLAGS.ADMINISTRATOR) && args.length == 0) {
                     console.log("bruh1")
                     message.reply("fuck off normie you can't.")
                     return;
@@ -170,7 +167,7 @@ client.on('messageCreate', message => {
             }
 
             case "admin args": {
-                if (!message.guild.members.cache.get(message.author.id).hasPermission('ADMINISTRATOR') && args.length > 0) {
+                if (!message.guild.members.cache.get(message.author.id).permissions.has(Discord.Permissions.FLAGS.ADMINISTRATOR) && args.length > 0) {
                     console.log("bruh2")
                     message.reply("fuck off normie you can't.")
                     return;
@@ -179,7 +176,7 @@ client.on('messageCreate', message => {
             }
 
             case "admin global": {
-                if (!message.guild.members.cache.get(message.author.id).hasPermission('ADMINISTRATOR')) {
+                if (!message.guild.members.cache.get(message.author.id).permissions.has(Discord.Permissions.FLAGS.ADMINISTRATOR)) {
                     console.log("bruh3")
                     message.reply("fuck off normie you can't.")
                     return;
@@ -188,7 +185,7 @@ client.on('messageCreate', message => {
             }
 
             case "rolemod args": {
-                if (!message.guild.members.cache.get(message.author.id).hasPermission('MANAGE_ROLES') && args.length > 0) {
+                if (!message.guild.members.cache.get(message.author.id).permissions.has(Discord.Permissions.FLAGS.MANAGE_ROLES) && args.length > 0) {
                     console.log("bruh4")
                     message.reply("fuck off normie you can't.")
                     return;
@@ -197,7 +194,7 @@ client.on('messageCreate', message => {
             }
 
             case "rolemod noargs": {
-                if (!message.guild.members.cache.get(message.author.id).hasPermission('MANAGE_ROLES') && args.length == 0) {
+                if (!message.guild.members.cache.get(message.author.id).permissions.has(Discord.Permissions.FLAGS.MANAGE_ROLES) && args.length == 0) {
                     console.log("bruh5")
                     message.reply("fuck off normie you can't.")
                     return;
@@ -206,7 +203,7 @@ client.on('messageCreate', message => {
             }
 
             case "rolemod global": {
-                if (!message.guild.members.cache.get(message.author.id).hasPermission('MANAGE_ROLES')) {
+                if (!message.guild.members.cache.get(message.author.id).permissions.has(Discord.Permissions.FLAGS.MANAGE_ROLES)) {
                     console.log("bruh6")
                     message.reply("fuck off normie you can't.")
                     return;
@@ -235,7 +232,7 @@ client.on("messageDelete", message => { // This make the message delete go brrrr
         .setTimestamp()
         .setDescription(`Message deleted in <#${message.channel.id}> [Jump to channel](${message.url} 'Jump to channel')`)
     if (message.attachments) {
-        message.attachments.array().forEach(attachment => {
+        message.attachments.forEach(attachment => {
             log.addField("Attachment:", `[Link](${attachment.proxyURL} 'Attachment link')`, true)
             if (attachment.proxyURL.includes(".png") || attachment.proxyURL.includes(".jpg") || attachment.proxyURL.includes(".gif")) {
                 log.setImage(attachment.proxyURL);
@@ -248,7 +245,7 @@ client.on("messageDelete", message => { // This make the message delete go brrrr
 
     let loggingChannel = message.guild.channels.cache.find(ch => ch.name === logchannel)
     if (!loggingChannel) return;
-    loggingChannel.send(log);
+    loggingChannel.send({embeds:[log]});
 });
 
 client.on("messageUpdate", (oldMessage, newMessage) => { // This make the message rdit go brrrr.
@@ -281,7 +278,7 @@ client.on("messageUpdate", (oldMessage, newMessage) => { // This make the messag
 
     let loggingChannel = newMessage.guild.channels.cache.find(ch => ch.name === logchannel)
     if (!loggingChannel) return;
-    loggingChannel.send(log);
+    loggingChannel.send({embeds:[log]});
 })
 
 client.on("guildMemberAdd", member => {
@@ -295,7 +292,7 @@ client.on("guildMemberAdd", member => {
 
     let loggingChannel = member.guild.channels.cache.find(ch => ch.name === logchannel)
     if (!loggingChannel) return;
-    loggingChannel.send(log);
+    loggingChannel.send({embeds:[log]});
 })
 
 client.on("guildMemberRemove", member => {
@@ -308,7 +305,7 @@ client.on("guildMemberRemove", member => {
         .setFooter("User ID: " + member.user.id);
     let loggingChannel = member.guild.channels.cache.find(ch => ch.name === logchannel)
     if (!loggingChannel) return;
-    loggingChannel.send(log)
+    loggingChannel.send({embeds:[log]})
 })
 
 client.on("guildMemberUpdate", (oldMember, newMember) => {
@@ -338,7 +335,7 @@ client.on("guildMemberUpdate", (oldMember, newMember) => {
     }
     let loggingChannel = oldMember.guild.channels.cache.find(ch => ch.name === logchannel)
     if (!loggingChannel || send == false) return;
-    loggingChannel.send(log)
+    loggingChannel.send({embeds:[log]})
 })
 
 client.on("messageReactionAdd", (reaction, user) => { // message reactions go brr ver c00l
@@ -377,9 +374,6 @@ distube
     })
     .on("addSong", (queue, song) => queue.textChannel.send(
         `Added ${song.name} - \`${song.formattedDuration}\` to the queue by ${song.user.username}`
-    ))
-    .on("playList", (queue, playlist, song) => queue.textChannel.send(
-        `Play \`${playlist.name}\` playlist (${playlist.songs.length} songs).\nRequested by: ${song.user.username}\nNow playing \`${song.name}\` - \`${song.formattedDuration}\`\n${status(queue)}`
     ))
     .on("error", (channel, error) => {
         channel.send("fucky wucky error oh no: " + error)

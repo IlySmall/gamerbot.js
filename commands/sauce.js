@@ -44,6 +44,6 @@ module.exports = {
             if(result.creator) embed.addField("Artist:",result.creator,true)
             if(result.characters) embed.addField('Characters:', result.characters)
             if(result.part) embed.addField("Part:", result.part)
-        message.channel.send(embed) //TODO: update for v13
+        message.channel.send({embeds:[embed]}) 
     },
 };

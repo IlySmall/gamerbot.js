@@ -20,7 +20,7 @@ module.exports = {
                         .setTimestamp()
                     let loggingChannel = deletedMessages.first().guild.channels.cache.find(ch => ch.name === logchannel)
                     if (!loggingChannel) return;
-                    loggingChannel.send(delmsgs);
+                    loggingChannel.send({embeds:[delmsgs]});
                 })
                 .catch(console.error);
             })
@@ -40,7 +40,7 @@ module.exports = {
                                     .setTimestamp()
                                 let loggingChannel = deletedMessages.first().guild.channels.cache.find(ch => ch.name === logchannel)
                                 if (!loggingChannel) return;
-                                loggingChannel.send(delmsgs);
+                                loggingChannel.send({embeds:[delmsgs]});
                             })
                             .catch(console.error);
                     })
@@ -62,7 +62,7 @@ module.exports = {
                         .setTimestamp()
                     let loggingChannel = deletedMessages.first().guild.channels.cache.find(ch => ch.name === logchannel)
                     if (!loggingChannel) return;
-                    loggingChannel.send(delmsgs);
+                    loggingChannel.send({embeds:[delmsgs]});
                 })
                 .catch(console.error);
             })
