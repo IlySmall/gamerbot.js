@@ -1,5 +1,7 @@
 const Discord = require('discord.js'); // if you don't have this you can't commit discord
 var _ = require('underscore');
+const { REST } = require('@discordjs/rest')
+const { Routes } = require('discord-api-types/v9');
 var { prefix, token, globalCleanup, logchannel } = require('./cfg.json');
 setInterval(() => {
     var cfg = require('./cfg.json');
@@ -9,9 +11,10 @@ setInterval(() => {
     globalCleanup = cfg.globalCleanup;
 }, 500);
 const fs = require('fs'); // for checking filesystem.
-const client = new Discord.Client(); // read please
+const client = new Discord.Client({intents:[Discord.Intents.FLAGS.GUILDS, Discord.Intents.FLAGS.GUILD_MEMBERS, Discord.Intents.FLAGS.GUILD_VOICE_STATES, Discord.Intents.FLAGS.GUILD_PRESENCES, Discord.Intents.FLAGS.GUILD_MESSAGE_TYPING, Discord.Intents.FLAGS.DIRECT_MESSAGES]}); // read please
 let rolecid = "740408169712320592"
 let rolemid = "816023313495228446"
+let clientId = "772792940158255124"
 const rolearr = ["749789244536389713", "740399821818429470", "721544565689155584", "739604745462874195", "740394347173773462", "739609241085804594", "740395831424974973", "740397121710325831", "740395459788668992", "740397783831412746", "739873729655472269", "740398278390054963", "740401142130933812", "740396629642706996", "718147584568328253", "749014983689371670"]
 const emojiarr = ["754340781984317521", "717230296721915905", "717230616655167510", "740411552850509894", "740412109590102096", "740414056757985281", "740413386382377033", "745118447821914212", "740414636720914483", "740415675679506472", "719361899472486471", "740416254157783092", "797686113736327168", "720392147878150184", "740413659653603328", "717230297082757170"]
 client.commands = new Discord.Collection(); // array<T> sorta of gay thing of commands.
@@ -24,6 +27,23 @@ for (const file of commandFiles) { // does node magic on the files
     const command = require(`./commands/${file}`); // how 2 command it
     client.commands.set(command.name, command); // command it exist
 }
+
+const rest = new REST({ version: '9' }).setToken(token); //slash command REST cancer
+
+(async () => {
+	try {
+		console.log('Started refreshing application (/) commands.');
+
+		await rest.put(
+			Routes.applicationCommands(clientId),
+			{ body: client.commands },
+		);
+
+		console.log('Successfully reloaded application (/) commands.');
+	} catch (error) {
+		console.error(error);
+	}
+})();
 
 client.on('ready', () => { // Stuff that happens when the bot alives
 
@@ -57,8 +77,9 @@ client.on('ready', () => { // Stuff that happens when the bot alives
     }, 86400000) // unnecessarily long time out because pepega.
 });
 
-client.on('message', message => {
+client.on('messageCreate', message => {
     //sneed vibe check
+    console.log(message)
     fs.readFile('sneed.json', function (err, data) {
         if (err) {
             throw err;
@@ -123,7 +144,7 @@ client.on('message', message => {
         }
     }
 
-    if (command.guildOnly && message.channel.type === 'dm') {
+    if (command.guildOnly && message.channel.type === 'DM') {
         return message.reply('I can\'t execute that command inside DMs!'); // read the string
     }
 
@@ -131,9 +152,9 @@ client.on('message', message => {
     timestamps.set(message.author.id, now);
     setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
 
-    if (message.channel.type != "dm") { //thank you and fuck you MLG
+    if (message.channel.type != "DM") { //thank you and fuck you MLG
         if (globalCleanup > 0) {
-            message.delete({ "timeout": globalCleanup })
+            setTimeout(() => message.delete(),globalCleanup)
                 .then(msg => console.log(`Deleted message from ${msg.author.username}, cleanup worky gud`))
                 .catch(console.error);
         }

@@ -5,7 +5,7 @@ module.exports = {
     permissions:"admin global",
     guildOnly: true,
 	execute(message) {
-        message.guild.channels.cache.get(message.channel.id).overwritePermissions([
+        message.guild.channels.cache.get(message.channel.id).permissionOverwrites.set([
             {
                id: message.guild.id,
                deny: ['VIEW_CHANNEL'],
