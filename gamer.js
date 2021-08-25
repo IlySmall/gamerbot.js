@@ -344,7 +344,7 @@ client.on("messageReactionRemove", (reaction, user) => { // message reactions go
 
 //music bullshit here
 const DisTube = require('distube')
-const distube = new DisTube(client, { searchSongs: false });
+const distube = new DisTube.default(client, { searchSongs: false });
 const status = (queue) => `Volume: \`${queue.volume}%\` | Filter: \`${queue.filter || "Off"}\` | Loop: \`${queue.repeatMode ? queue.repeatMode == 2 ? "All Queue" : "This Song" : "Off"}\` | Autoplay: \`${queue.autoplay ? "On" : "Off"}\``;
 distube
     .on("playSong", (message, queue, song) => message.channel.send(
