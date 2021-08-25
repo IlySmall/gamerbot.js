@@ -11,7 +11,7 @@ setInterval(() => {
     globalCleanup = cfg.globalCleanup;
 }, 500);
 const fs = require('fs'); // for checking filesystem.
-const client = new Discord.Client({intents:[Discord.Intents.FLAGS.GUILDS, Discord.Intents.FLAGS.GUILD_MEMBERS, Discord.Intents.FLAGS.GUILD_VOICE_STATES, Discord.Intents.FLAGS.GUILD_PRESENCES, Discord.Intents.FLAGS.GUILD_MESSAGE_TYPING, Discord.Intents.FLAGS.GUILD_MESSAGES, Discord.Intents.FLAGS.GUILD_MESSAGE_REACTIONS, Discord.Intents.FLAGS.DIRECT_MESSAGES]}); // read please
+const client = new Discord.Client({ intents: [Discord.Intents.FLAGS.GUILDS, Discord.Intents.FLAGS.GUILD_MEMBERS, Discord.Intents.FLAGS.GUILD_VOICE_STATES, Discord.Intents.FLAGS.GUILD_PRESENCES, Discord.Intents.FLAGS.GUILD_MESSAGE_TYPING, Discord.Intents.FLAGS.GUILD_MESSAGES, Discord.Intents.FLAGS.GUILD_MESSAGE_REACTIONS, Discord.Intents.FLAGS.DIRECT_MESSAGES] }); // read please
 let rolecid = "740408169712320592"
 let rolemid = "816023313495228446"
 let clientId = "772792940158255124"
@@ -31,18 +31,18 @@ for (const file of commandFiles) { // does node magic on the files
 /*const rest = new REST({ version: '9' }).setToken(token); //slash command REST cancer
 
 (async () => {
-	try {
-		console.log('Started refreshing application (/) commands.');
+    try {
+        console.log('Started refreshing application (/) commands.');
 
-		await rest.put(
-			Routes.applicationCommands(clientId),
-			{ body: client.commands },
-		);
+        await rest.put(
+            Routes.applicationCommands(clientId),
+            { body: client.commands },
+        );
 
-		console.log('Successfully reloaded application (/) commands.');
-	} catch (error) {
-		console.error(error);
-	}
+        console.log('Successfully reloaded application (/) commands.');
+    } catch (error) {
+        console.error(error);
+    }
 })();*/
 
 client.on('ready', () => { // Stuff that happens when the bot alives
@@ -153,7 +153,7 @@ client.on('messageCreate', message => {
 
     if (message.channel.type != "DM") { //thank you and fuck you MLG
         if (globalCleanup > 0) {
-            setTimeout(() => message.delete(),globalCleanup)
+            setTimeout(() => message.delete(), globalCleanup)
         }
 
         switch (command.permissions) { // Don't touch this you fucking fool.
@@ -245,7 +245,7 @@ client.on("messageDelete", message => { // This make the message delete go brrrr
 
     let loggingChannel = message.guild.channels.cache.find(ch => ch.name === logchannel)
     if (!loggingChannel) return;
-    loggingChannel.send({embeds:[log]});
+    loggingChannel.send({ embeds: [log] });
 });
 
 client.on("messageUpdate", (oldMessage, newMessage) => { // This make the message rdit go brrrr.
@@ -264,7 +264,7 @@ client.on("messageUpdate", (oldMessage, newMessage) => { // This make the messag
         .setTimestamp()
         .setFooter("User ID: " + oldMessage.author.id);
     if (oldMessage.attachments) {
-        oldMessage.attachments.array().forEach(attachment => {
+        oldMessage.attachments.forEach(attachment => {
             log.addField("Attachment:", `[Link](${attachment.proxyURL} 'Attachment link')`, true)
             if (attachment.proxyURL.includes(".png") || attachment.proxyURL.includes(".jpg") || attachment.proxyURL.includes(".gif")) {
                 log.setImage(attachment.proxyURL);
@@ -278,7 +278,7 @@ client.on("messageUpdate", (oldMessage, newMessage) => { // This make the messag
 
     let loggingChannel = newMessage.guild.channels.cache.find(ch => ch.name === logchannel)
     if (!loggingChannel) return;
-    loggingChannel.send({embeds:[log]});
+    loggingChannel.send({ embeds: [log] });
 })
 
 client.on("guildMemberAdd", member => {
@@ -292,7 +292,7 @@ client.on("guildMemberAdd", member => {
 
     let loggingChannel = member.guild.channels.cache.find(ch => ch.name === logchannel)
     if (!loggingChannel) return;
-    loggingChannel.send({embeds:[log]});
+    loggingChannel.send({ embeds: [log] });
 })
 
 client.on("guildMemberRemove", member => {
@@ -305,7 +305,7 @@ client.on("guildMemberRemove", member => {
         .setFooter("User ID: " + member.user.id);
     let loggingChannel = member.guild.channels.cache.find(ch => ch.name === logchannel)
     if (!loggingChannel) return;
-    loggingChannel.send({embeds:[log]})
+    loggingChannel.send({ embeds: [log] })
 })
 
 client.on("guildMemberUpdate", (oldMember, newMember) => {
@@ -322,20 +322,20 @@ client.on("guildMemberUpdate", (oldMember, newMember) => {
         log.addField("Old Nickname:", oldMember.nickname || "None", true)
         log.addField("New Nickname:", newMember.nickname || "None", true)
     }
-    if (oldMember.roles.cache.array() != newMember.roles.cache.array()) {
+    if (oldMember.roles.cache != newMember.roles.cache) {
 
-        if (_.difference(newMember.roles.cache.array(), oldMember.roles.cache.array()).length > 0) {
+        if (_.difference(newMember.roles.cache, oldMember.roles.cache).length > 0) {
             send = true
-            log.addField("Added roles: ", _.difference(newMember.roles.cache.array(), oldMember.roles.cache.array()))
+            log.addField("Added roles: ", _.difference(newMember.roles.cache, oldMember.roles.cache))
         }
-        if (_.difference(oldMember.roles.cache.array(), newMember.roles.cache.array()).length > 0) {
+        if (_.difference(oldMember.roles.cache, newMember.roles.cache).length > 0) {
             send = true
-            log.addField("Removed roles: ", _.difference(oldMember.roles.cache.array(), newMember.roles.cache.array()))
+            log.addField("Removed roles: ", _.difference(oldMember.roles.cache, newMember.roles.cache))
         }
     }
     let loggingChannel = oldMember.guild.channels.cache.find(ch => ch.name === logchannel)
     if (!loggingChannel || send == false) return;
-    loggingChannel.send({embeds:[log]})
+    loggingChannel.send({ embeds: [log] })
 })
 
 client.on("messageReactionAdd", (reaction, user) => { // message reactions go brr ver c00l
@@ -365,15 +365,24 @@ client.on("messageReactionRemove", (reaction, user) => { // message reactions go
 //music bullshit here
 const DisTube = require('distube')
 const distube = new DisTube.default(client, { searchSongs: 0 });
-const status = (queue) => `Volume: \`${queue.volume}%\` | Filter: \`${queue.filter || "Off"}\` | Loop: \`${queue.repeatMode ? queue.repeatMode == 2 ? "All Queue" : "This Song" : "Off"}\` | Autoplay: \`${queue.autoplay ? "On" : "Off"}\``;
 distube
     .on("playSong", (queue, song) => {
-        let msg = `Playing \`${song.name}\` - \`${song.formattedDuration}\``
-        if (song.playlist) msg = `Playlist: ${song.playlist.name}\n${msg}`
-        queue.textChannel.send(msg)
+        let embed = new Discord.MessageEmbed()
+            .setAuthor(client.user.tag, client.user.displayAvatarURL({ "format": "png", "size": 1024 })) //gets the author's avatar url.
+            .setThumbnail(client.user.avatarURL)
+            .setColor("#ccccff")
+            .setDescription(`Volume: \`${queue.volume}%\` | Filter: \`${queue.filter || "Off"}\` | Loop: \`${queue.repeatMode ? queue.repeatMode == 2 ? "All Queue" : "This Song" : "Off"}\` | Autoplay: \`${queue.autoplay ? "On" : "Off"}\``)
+            .setTimestamp()
+            .setFooter('Please donate at https://paypal.me/nowabi if you like the bot')
+            .addField("Playing:", `\`${song.name}\` - \`${song.formattedDuration}\``)
+        if (song.playlist) embed.addField("Playlist:", song.playlist.name)
+        queue.textChannel.send({ embeds: [embed] })
     })
     .on("addSong", (queue, song) => queue.textChannel.send(
         `Added ${song.name} - \`${song.formattedDuration}\` to the queue by ${song.user.username}`
+    ))
+    .on("addList", (queue, playlist) => queue.textChannel.send(
+        `Added \`${playlist.name}\` playlist (${playlist.songs.length} songs) to the queue by ${playlist.user.username}`
     ))
     .on("error", (channel, error) => {
         channel.send("fucky wucky error oh no: " + error)
