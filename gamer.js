@@ -153,7 +153,7 @@ client.on('messageCreate', message => {
 
     if (message.channel.type != "DM") { //thank you and fuck you MLG
         if (globalCleanup > 0) {
-            setTimeout(() => message.delete(), globalCleanup)
+            setTimeout(() => message.delete().catch(console.error), globalCleanup)
         }
 
         switch (command.permissions) { // Don't touch this you fucking fool.
