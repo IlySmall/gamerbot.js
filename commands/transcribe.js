@@ -16,7 +16,7 @@ module.exports = {
             data=[]
             ended=false
             var channel=message.channel
-                var lastId = channel.lastMessageID
+                var lastId = channel.lastMessageId
                 function fetch(lastId) {
                     channel.messages.fetch({ limit: 100, before: lastId }).then(messages => {
                         var i = 0
