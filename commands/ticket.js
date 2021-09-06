@@ -5,7 +5,7 @@ module.exports = {
     guildOnly: true,
 	execute(message,args,content) {
         var isArgsContent=args[0]==content
-        var topic = (isArgsContent ? args[0]:args[0]+content)
+        var topic = (isArgsContent ? args[0]:args[0]+" "+content)
         message.channel.guild.channels.create(`${message.author.tag}_${Date.now()}`, {
             type: 'text',
             parent: '852629180009152533',
