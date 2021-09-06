@@ -12,7 +12,7 @@ module.exports = {
     usage:" ",
     guildOnly: true,
 	execute(message) {
-        if(message.channel.parentID=="852629180009152533"){
+        if(message.channel.parentId=="852629180009152533"){
             data=[]
             ended=false
             var channel=message.channel
