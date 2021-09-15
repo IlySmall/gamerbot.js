@@ -1,3 +1,6 @@
+const {
+	Util: { splitMessage },
+  } = require("discord.js");
 module.exports = {
 	name: 'help',
 	description: 'List all of my commands or info about a specific command.',
@@ -13,8 +16,8 @@ module.exports = {
 			data.push('all the current commands you dumb shit:');
 			data.push(commands.map(command =>"***"+ command.name + "***: "+command.description).join('\n '));
 			data.push(`\nYou can send \`${prefix}help [command name]\` if you're retarded and need more help!`);
-
-			return message.author.send(data, { split: true })
+			var splitData=splitMessage(data.join("\n"),{maxLength = 2000, char = '\n', prepend = '', append = ''})
+			return message.author.send(splitData)
 				.then(() => {
 					if (message.channel.type === 'DM') return;
 					message.reply('I\'ve sent you a DM with all my commands, fuckface!');
