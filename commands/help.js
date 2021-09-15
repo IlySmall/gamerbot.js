@@ -17,7 +17,7 @@ module.exports = {
 			data.push(commands.map(command =>"***"+ command.name + "***: "+command.description).join('\n '));
 			data.push(`\nYou can send \`${prefix}help [command name]\` if you're retarded and need more help!`);
 			var splitData=splitMessage(data.join("\n"),{maxLength:2000, char:'\n', prepend:'', append:''})
-			return message.author.send(splitData)
+			return Promise.all(splitData.map(data=>message.author.send({content:data})))
 				.then(() => {
 					if (message.channel.type === 'DM') return;
 					message.reply('I\'ve sent you a DM with all my commands, fuckface!');
