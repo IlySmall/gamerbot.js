@@ -4,6 +4,6 @@ module.exports = {
     aliases: ['sad'],
     usage:" ",
 	execute(message) {
-        message.channel.send(`<@${message.author.id}> is sad`, {files: ["https://i.redd.it/39mpdazoupf51.png"]});
+        message.channel.send({content:`<@${message.author.id}> is sad`, files: ["https://i.redd.it/39mpdazoupf51.png"]});
 	},
 };
