@@ -15,7 +15,7 @@ module.exports = {
             .addField('Time:',`<t:${args[0]}:F>`,true)
             .setTimestamp()
             .setFooter('Please donate at https://paypal.me/nowabi if you like the bot');
-        client.guilds.cache.get("716993263889809510").channels.cache.get("877947724392169503").send({embeds:[embed]})
-        client.guilds.cache.get("716993263889809510").channels.cache.get("877947724392169503").send("<@&875033404071084112>")
+        client.guilds.cache.get("716993263889809510").channels.cache.get("864931160127176705").send({embeds:[embed]})
+        client.guilds.cache.get("716993263889809510").channels.cache.get("864931160127176705").send("<@&875033404071084112>")
 	},
 };
