@@ -35,7 +35,7 @@ module.exports = {
                             .addField("**Sneedn't**", `Until ${enddate} \n Time left: ${timeleft} \n For the reason of ${json.punishlist[i].reason}.`, false)
                             .setTimestamp()
                             .setFooter("User ID: " + message.author.id);
-                        message.channel.send(reply);
+                        message.channel.send({embeds:[reply]});
                         return;
                     }
                 }
