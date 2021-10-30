@@ -78,6 +78,7 @@ client.on('ready', () => { // Stuff that happens when the bot alives
 });
 
 client.on('messageCreate', message => {
+    if (message.content=="ogey") message.reply("rrat");
     //sneed vibe check
     fs.readFile('sneed.json', function (err, data) {
         if (err) {
