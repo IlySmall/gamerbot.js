@@ -11,6 +11,6 @@ module.exports = {
 			return `${user.username}'s avatar: ${user.displayAvatarURL({ dynamic: true, format: "png", size: 1024 })}`;
 		});
 
-		message.channel.send({content: avatarList});
+		message.channel.send({content: avatarList.toString()});
 	},
 };
