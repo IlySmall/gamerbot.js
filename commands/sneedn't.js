@@ -71,7 +71,8 @@ module.exports = {
                         return;
                     }
                     if(message.mentions.users.size == 1){
-                        message.guild.members.cache.get(message.mentions.users.at(0).id).roles.add(sneedRole)
+                        var firstuser=message.mentions.users.at(0);
+                        message.guild.members.cache.get(firstuser.id).roles.add(sneedRole)
                         var sneed = {
                             userid: message.mentions.users.array()[0].id,
                             endtime: et,
